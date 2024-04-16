@@ -36,33 +36,33 @@ const Home = () => {
   }, []);
 
   const markers = [
-    {
-      position: [19.999837518893063, 42.60807025928232], // besha1
-      popup: "Riyadh",
-      data: "لم يتم المعالجة",
-      name: "مواطن فلان الفلان",
-      contactNumbers: "0500000000",
-      executingEntity: "الجمعية الصحية الانسانية",
-      requestType: "احتياج الى سرير متحرك لذوي الاحتياجات الخاصة",
-    },
-    {
-      position: [20.014159268682786, 42.61439655478464], // Jeddah
-      popup: "Jeddah",
-      data: "تم المعالجة",
-      name: "مواطن فلان الفلان",
-      contactNumbers: "0500000000",
-      executingEntity: "جمعية عايشين بكرم الله ",
-      requestType: "يحتاج الى مصروف شهري",
-    },
-    {
-      position: [19.99760046123814, 42.58951891442223], // Dammam
-      popup: "Dammam",
-      data: "جاري المعالجة",
-      name: "مواطن فلان الفلان",
-      contactNumbers: "0500000000",
-      executingEntity: "جمعية  البر",
-      requestType: "يحتاج الى اثاث منزلي",
-    },
+    // {
+    //   position: [19.999837518893063, 42.60807025928232], // besha1
+    //   popup: "Riyadh",
+    //   data: "لم يتم المعالجة",
+    //   name: "مواطن فلان الفلان",
+    //   contactNumbers: "0500000000",
+    //   executingEntity: "الجمعية الصحية الانسانية",
+    //   requestType: "احتياج الى سرير متحرك لذوي الاحتياجات الخاصة",
+    // },
+    // {
+    //   position: [20.014159268682786, 42.61439655478464], // Jeddah
+    //   popup: "Jeddah",
+    //   data: "تم المعالجة",
+    //   name: "مواطن فلان الفلان",
+    //   contactNumbers: "0500000000",
+    //   executingEntity: "جمعية عايشين بكرم الله ",
+    //   requestType: "يحتاج الى مصروف شهري",
+    // },
+    // {
+    //   position: [19.99760046123814, 42.58951891442223], // Dammam
+    //   popup: "Dammam",
+    //   data: "جاري المعالجة",
+    //   name: "مواطن فلان الفلان",
+    //   contactNumbers: "0500000000",
+    //   executingEntity: "جمعية  البر",
+    //   requestType: "يحتاج الى اثاث منزلي",
+    // },
   ];
 
   const getMarkerIcon = (data) => {
@@ -120,13 +120,28 @@ const Home = () => {
       }
     }
   };
+  const handleUpdate = async (longitude, latitude, id, color) => {
+    console.log(`the long >> ${longitude} 
+    the id >> ${id}
+    the lat >> ${latitude}
+    the color>>${color}
+    `);
+
+    // try {
+    //   await axios.put(`http://jazlhelp.runasp.net/api/content/${id}`);
+    //   console.log("Person deleted successfully!");
+    //   fetchPersons();
+    // } catch (error) {
+    //   console.error("Error deleting person:", error);
+    // }
+  };
 
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   ); // Access user role from Redux state
-  // console.log(
-  //   `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
-  // );
+  console.log(
+    `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
+  );
 
   const LocationFinderDummy = () => {
     const map = useMapEvents({
@@ -216,7 +231,17 @@ const Home = () => {
                     </tbody>
                   </table>
                   <div className="flex justify-center">
-                    <button className="text-blue-500 cursor-pointer p-1 m-1 ">
+                    <button
+                      className="text-blue-500 cursor-pointer p-1 m-1 "
+                      onClick={() =>
+                        handleUpdate(
+                          person.longitude,
+                          person.latitude,
+                          person.id,
+                          person.color
+                        )
+                      }
+                    >
                       تعديل هذه الحالة
                     </button>
                     <button
@@ -229,63 +254,64 @@ const Home = () => {
                 </Popup>
               </Marker>
             ))}
-          {markers.map((marker, index) => (
-            <Marker
-              key={index}
-              position={marker.position}
-              icon={getMarkerIcon(marker.data)}
-            >
-              <Popup>
-                <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
-                  <tbody className="border-[1.5px] border-black">
-                    <tr className="border-[1.5px] border-black">
-                      <td className="border-[1.5px] border-black p-1">
-                        {marker.name || "N/A"}
-                      </td>
-                      <td className="border-[1.5px] border-black p-1">
-                        الاسم:
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border-[1.5px] border-black p-1">
-                        {marker.executingEntity || "N/A"}
-                      </td>
-                      <td className="border-[1.5px] border-black p-1">
-                        الجهة المنفذة
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border-[1.5px] border-black p-1">
-                        {marker.requestType || "N/A"}
-                      </td>
-                      <td className="border-[1.5px] border-black p-1">
-                        :نوع الحالة
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="border-[1.5px] border-black p-1">
-                        {marker.contactNumbers || "N/A"}
-                      </td>
-                      <td className="border-[1.5px] border-black p-1">
-                        :رقم الاتصال
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div className="flex justify-center">
-                  <button className="text-blue-500 cursor-pointer p-1 m-1">
-                    تعديل هذه الحالة
-                  </button>
-                  <button
-                    className="text-red-500 cursor-pointer ml-4 p-1 m-1"
-                    onClick={() => handleDelete(marker.id)}
-                  >
-                    مسح هذه الحالة
-                  </button>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
+          {markers &&
+            markers.map((marker, index) => (
+              <Marker
+                key={index}
+                position={marker.position}
+                icon={getMarkerIcon(marker.data)}
+              >
+                <Popup>
+                  <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
+                    <tbody className="border-[1.5px] border-black">
+                      <tr className="border-[1.5px] border-black">
+                        <td className="border-[1.5px] border-black p-1">
+                          {marker.name || "N/A"}
+                        </td>
+                        <td className="border-[1.5px] border-black p-1">
+                          الاسم:
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border-[1.5px] border-black p-1">
+                          {marker.executingEntity || "N/A"}
+                        </td>
+                        <td className="border-[1.5px] border-black p-1">
+                          الجهة المنفذة
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border-[1.5px] border-black p-1">
+                          {marker.requestType || "N/A"}
+                        </td>
+                        <td className="border-[1.5px] border-black p-1">
+                          :نوع الحالة
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border-[1.5px] border-black p-1">
+                          {marker.contactNumbers || "N/A"}
+                        </td>
+                        <td className="border-[1.5px] border-black p-1">
+                          :رقم الاتصال
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="flex justify-center">
+                    <button className="text-blue-500 cursor-pointer p-1 m-1">
+                      تعديل هذه الحالة
+                    </button>
+                    <button
+                      className="text-red-500 cursor-pointer ml-4 p-1 m-1"
+                      onClick={() => handleDelete(marker.id)}
+                    >
+                      مسح هذه الحالة
+                    </button>
+                  </div>
+                </Popup>
+              </Marker>
+            ))}
           {/* <LocationFinderDummy /> */}
         </MapContainer>
       </div>

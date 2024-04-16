@@ -76,7 +76,15 @@ export const Signup = () => {
       navigate("/signin");
     } catch (error) {
       console.error("Registration failed:", error);
-      setError("Registration failed. Please try again.");
+      setError(
+        error.response?.data?.errors ? (
+          error.response.data.errors.map((errorMessage) => (
+            <h2 className="text-red-600">{errorMessage}</h2>
+          ))
+        ) : (
+          <h2 className="text-red-600">{error.response?.data}</h2>
+        )
+      );
     }
   };
 
@@ -356,7 +364,7 @@ export const Signup = () => {
                 إنشاء حساب جديد
               </button>
               <p className="forgot-password text-center">
-                {error && <span className="text-danger">{error}</span>}
+                {error}
                 مسجل بالفعل؟ <Link to="/signin">تسجيل الدخول؟</Link>
               </p>
             </div>

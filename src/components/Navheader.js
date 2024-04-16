@@ -89,15 +89,15 @@ export default function Navheader() {
 
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="/sign-in"
+                    <Link
+                      to="/signin"
                       className={classNames(
                         active ? "bg-gray-100" : "",
                         "block px-4 py-2 text-sm text-gray-900 no-underline"
                       )}
                     >
                       Sign out
-                    </a>
+                    </Link>
                   )}
                 </Menu.Item>
               </Menu.Items>

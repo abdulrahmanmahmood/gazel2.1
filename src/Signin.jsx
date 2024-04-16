@@ -52,22 +52,17 @@ const Signin = () => {
       navigate("/home");
     } catch (error) {
       console.error("Login failed:", error);
-      if (error.response && error.response.status === 400) {
-        // Server responded with a 400 status code (Bad Request)
-        // Check if the error message indicates that email is not confirmed
-        if (
-          error.response.data ===
-          "Email not confirmed. Please check your email inbox to verify your email address."
-        ) {
-          setError("الرجاء تأكيد البريد الإلكتروني أولاً قبل تسجيل الدخول.");
-        } else {
-          // Handle other error cases
-          setError("Login failed. Please try again.");
-        }
-      } else {
-        // Handle other error cases
-        setError("Login failed. Please try again.");
-      }
+
+      // Handle other error cases
+      setError(
+        error.response?.data?.errors ? (
+          error.response.data.errors.map((errorMessage) => (
+            <h2 className="text-red-600">{errorMessage}</h2>
+          ))
+        ) : (
+          <h2 className="text-red-600">{error.response?.data}</h2>
+        )
+      );
     }
   };
   return (
@@ -154,7 +149,7 @@ const Signin = () => {
               </p>
             </Link>
 
-            {error && <span className="text-danger">{error}</span>}
+            {error}
           </form>
         </div>
       </div>

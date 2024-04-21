@@ -3,6 +3,13 @@ import cloudImag from "../assets/cloud.png";
 import HomeImg1 from "../assets/homeImg1.png";
 
 const HomeComp1 = () => {
+  const handleVolunteerRegistration = () => {
+    window.open("https://forms.gle/ubqVDhtUkKhVHix16", "_blank");
+  };
+
+  const handleHumanitarianRegistration = () => {
+    window.open("https://forms.gle/xBZieWw92nT5hEMj7", "_blank");
+  };
   return (
     <div className="w-full bg-white ">
       <div className="flex flex-col">
@@ -36,10 +43,16 @@ const HomeComp1 = () => {
               عبر القطاع الثالث
             </p>
             <div className="w-[80%] mx-auto flex flex-row justify-between  p-3">
-              <button className="px-8 py-2 bg-[#F5F5F5] font-Cairo text-lg font-bold leading-7 text-right rounded-lg">
+              <button
+                className="px-8 py-2 bg-[#F5F5F5] font-Cairo text-lg font-bold leading-7 text-right rounded-lg"
+                onClick={handleHumanitarianRegistration}
+              >
                 تسجيل حالتي الإنسانية
               </button>
-              <button className="px-8 py-2 bg-[#CEB99E] text-white font-Cairo text-lg font-bold leading-7 text-right rounded-lg">
+              <button
+                className="px-8 py-2 bg-[#CEB99E] text-white font-Cairo text-lg font-bold leading-7 text-right rounded-lg"
+                onClick={handleVolunteerRegistration}
+              >
                 تسجيل المتطوعين
               </button>
             </div>

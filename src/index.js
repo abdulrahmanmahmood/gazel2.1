@@ -8,14 +8,17 @@ import { Provider } from "react-redux";
 import { store } from "./rtk/Store";
 import Signin from "./Signin";
 import { Signup } from "./Signup";
-import Home from "./Home";
+import Map1 from "./Map1";
 import SetAddress from "./SetAddress";
 import ProfilePage from "./ProfilePage";
+import Home from "./Home";
+import First from "./First";
+import Complaint from "./Complaint";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <App />,
+    path: "/first",
+    element: <First />,
   },
   {
     path: "/signin",
@@ -26,8 +29,8 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/home",
-    element: <Home />,
+    path: "/map1",
+    element: <Map1 />,
   },
   {
     path: "/setAddress",
@@ -36,6 +39,14 @@ const router = createBrowserRouter([
   {
     path: "/profilePage",
     element: <ProfilePage />,
+  },
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/complaint",
+    element: <Complaint />,
   },
 ]);
 

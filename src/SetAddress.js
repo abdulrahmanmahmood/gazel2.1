@@ -16,7 +16,6 @@ import OrangeIcon from "./assets/placeholder.png";
 import { Icon } from "leaflet";
 import axios from "axios"; // Import Axios for HTTP requests
 import { useDispatch } from "react-redux";
-import { addMarker } from "./rtk/slices/marker";
 
 const SetAddress = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
@@ -78,7 +77,7 @@ const SetAddress = () => {
       );
 
       // console.log("Data sent successfully:", response.data);
-      // dispatch(addMarker(dataToSend));
+      
 
       // Reset form data and selected position after successful submission
       setFormData({ name: "", contactNumbers: "", requestType: "" });
@@ -111,8 +110,6 @@ const SetAddress = () => {
       });
     }
   };
-  const markers = useSelector((state) => state.markers);
-  console.log("markers in setAddress", markers);
 
   return (
     <div className="w-full bg-[#ceb99c] h-screen  p-0 m-0">

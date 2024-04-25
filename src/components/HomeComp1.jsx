@@ -25,7 +25,7 @@ const HomeComp1 = () => {
           </h3>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 px-[5%] justify-between">
-          <img src={HomeImg1} alt="" />
+          <img src={HomeImg1} alt="" className="mx-auto max-md:w-full" />
           <div className=" text-right  justify-between flex flex-col ">
             <p className="font-Cairo text-2xl font-semibold leading-11 text-right p-3 my-3">
               نفذ فريق جزل التطوعي بالتعاون مع محافظة بيشة وجامعة بيشة فكرة موقع

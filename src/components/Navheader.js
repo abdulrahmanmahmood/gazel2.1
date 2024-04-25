@@ -35,12 +35,12 @@ export default function Navheader() {
         <div className="flex flex-row gap-3  lg:-order-1">
           <img
             src={logo1}
-            className=" w-[100px] mr-5 sm:h-23"
+            className="w-15 h-15 max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
             alt="Landwind Logo"
           />
           <img
             src={logo2}
-            className=" w-[150px] mr-3 sm:h-23"
+            className="w-15 h-15 max-md:w-22 max-md:h-20 lg:w-[150px] mr-3 sm:h-23"
             alt="Landwind Logo"
           />
         </div>
@@ -53,8 +53,7 @@ export default function Navheader() {
             <button className="mx-6">
               <img src={Bell} />
             </button>
-
-            <p className="text-black text-[24px] font-[700] mx-1">
+            <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
               <Link to="/first">تسجيل الدخول</Link>
             </p>
 
@@ -63,7 +62,7 @@ export default function Navheader() {
                 <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <img className="h-15 w-12 " src={profileImage} alt="" />
+                  <img className="hidden lg:block lg:h-15 lg:w-12 " src={profileImage} alt="" />
                 </div>
               </Menu.Button>
               <Transition
@@ -127,7 +126,7 @@ export default function Navheader() {
             } items-center justify-between w-full lg:flex lg:w-auto lg:order-2`}
             id="mobile-menu-2"
           >
-            <ul className="flex flex-col mt-4  lg:flex-row lg:space-x-8 lg:mt-0 text-[24px] font-[600]">
+            <ul className="flex flex-col-reverse mt-4  lg:flex-row lg:space-x-8 lg:mt-0 text-[24px] font-[600]">
               <li
                 className={`p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
                   window.location.pathname === "/complaint"
@@ -170,6 +169,14 @@ export default function Navheader() {
                   الرئيسية
                 </Link>
               </li>
+
+              <li
+                className={`text-black p-1 rounded  my-2 lg:my-0 lg:px-4 hover:text-black lg:hidden  `}
+              >
+                <p className="text-black text-[24px] font-[700] mx-1">
+                  <Link to="/first">تسجيل الدخول</Link>
+                </p>
+              </li>
             </ul>
           </div>
         </div>
@@ -178,15 +185,7 @@ export default function Navheader() {
   );
 }
 
-const navigation = [
-  { name: "الرئيسيه", href: "/home", current: true },
-  { name: "الخريطة التفاعلية", href: "/setAddress", current: false },
-  { name: "الشكاوى", href: "/complaint", current: false },
-  // { name: 'Projects', href: '#', current: false },
-  // { name: 'Calendar', href: '#', current: false },
-];
-
-const ButtonT = ({toggleMobileMenu}) => {
+const ButtonT = ({ toggleMobileMenu }) => {
   return (
     <button
       onClick={toggleMobileMenu}

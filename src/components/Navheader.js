@@ -62,7 +62,11 @@ export default function Navheader() {
                 <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
-                  <img className="hidden lg:block lg:h-15 lg:w-12 " src={profileImage} alt="" />
+                  <img
+                    className="hidden lg:block lg:h-15 lg:w-12 "
+                    src={profileImage}
+                    alt=""
+                  />
                 </div>
               </Menu.Button>
               <Transition
@@ -154,6 +158,20 @@ export default function Navheader() {
                 >
                   الخريطة التفاعلية
                 </Link>
+              </li>{" "}
+              <li
+                className={`text-black p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                  window.location.pathname === "/News"
+                    ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                    : "text-black "
+                }`}
+              >
+                <Link
+                  to="/News"
+                  className="block py-2 pl-3 pr-4 text-center   rounded lg:bg-transparent  lg:p-0 "
+                >
+                  الاخبار{" "}
+                </Link>
               </li>
               <li
                 className={`text-black p-1 rounded  my-2 lg:my-0 lg:px-4 hover:text-black ${
@@ -169,7 +187,6 @@ export default function Navheader() {
                   الرئيسية
                 </Link>
               </li>
-
               <li
                 className={`text-black p-1 rounded  my-2 lg:my-0 lg:px-4 hover:text-black lg:hidden  `}
               >

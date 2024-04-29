@@ -14,6 +14,7 @@ import ProfilePage from "./ProfilePage";
 import Home from "./Home";
 import First from "./First";
 import Complaint from "./Complaint";
+import NewsPage from "./NewsPage";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: "/complaint",
     element: <Complaint />,
+  },
+  {
+    path: "/News",
+    element: <NewsPage />,
   },
 ]);
 

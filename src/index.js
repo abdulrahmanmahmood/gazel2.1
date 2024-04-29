@@ -9,12 +9,15 @@ import { store } from "./rtk/Store";
 import Signin from "./Signin";
 import { Signup } from "./Signup";
 import Map1 from "./Map1";
-import SetAddress from "./SetAddress";
 import ProfilePage from "./ProfilePage";
 import Home from "./Home";
 import First from "./First";
 import Complaint from "./Complaint";
 import NewsPage from "./NewsPage";
+import RegisterCase from "./RegisterCase";
+import AddCharity from "./AddCharity";
+import AllCases from "./AllCases";
+import AddOpport from "./AddOpport";
 
 const router = createBrowserRouter([
   {
@@ -34,8 +37,8 @@ const router = createBrowserRouter([
     element: <Map1 />,
   },
   {
-    path: "/setAddress",
-    element: <SetAddress />,
+    path: "/registercase",
+    element: <RegisterCase />,
   },
   {
     path: "/profilePage",
@@ -52,6 +55,18 @@ const router = createBrowserRouter([
   {
     path: "/News",
     element: <NewsPage />,
+  },
+  {
+    path: "/addcharity",
+    element: <AddCharity />,
+  },
+  {
+    path: "/allcases",
+    element: <AllCases />,
+  },
+  {
+    path: "/addOpport",
+    element: <AddOpport />,
   },
 ]);
 

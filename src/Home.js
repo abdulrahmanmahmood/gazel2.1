@@ -21,7 +21,6 @@ const Home = () => {
       prevIndex === 0 ? newsData.length - 1 : prevIndex - 1
     );
   };
-  
 
   return (
     <div className="w-full bg-[#CEB99E]">

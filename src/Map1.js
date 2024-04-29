@@ -15,6 +15,7 @@ import greenIcon from "./assets/gps.png";
 import OrangeIcon from "./assets/placeholder.png";
 import { useSelector } from "react-redux"; // Import useSelector hook to access Redux state
 import axios from "axios"; // Import Axios for HTTP requests
+import MapHeader from "./components/MapHeader";
 
 const Home = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
@@ -189,6 +190,7 @@ const Home = () => {
   return (
     <div className="w-full bg-[#ceb99c] h-[100vh] p-0 m-0 ">
       <Navheader />
+      <MapHeader/>
       <h1 className="text-4xl font-bold text-center my-8 text-black ">
         الجمعيات الخيرية وفرص التطوع في المحافظة
       </h1>

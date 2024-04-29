@@ -170,7 +170,7 @@ export default function Navheader() {
           <div
             className={`${
               isMobileMenuOpen ? "" : "hidden"
-            } items-center justify-between w-full lg:flex lg:w-auto lg:order-2`}
+            } items-center justify-between w-full lg:flex lg:w-auto lg:order-2 right-0`}
             id="mobile-menu-2"
           >
             <ul className="flex flex-col-reverse mt-4  lg:flex-row lg:space-x-8 lg:mt-0 text-[24px] font-[600]">

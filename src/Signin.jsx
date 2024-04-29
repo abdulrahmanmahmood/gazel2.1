@@ -11,6 +11,7 @@ import baseLogo from "./assets/baseLogo.png";
 import logo1 from "./assets/ub 1.png";
 import logo2 from "./assets/agaweed.png";
 import logo3 from "./assets/gazl.png";
+import Navheader from "./components/Navheader";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -75,19 +76,8 @@ const Signin = () => {
           backgroundPosition: "center",
         }}
       >
-        <div className=" flex  h-[130px] w-[30%] ">
-          <div className="flex flex-row  ml-[20px] mt-[20px] ">
-            <img src={baseLogo} width={131} height={131} alt="Logo1" />
-            <div className="my-auto">
-              <img
-                src={nextLogo}
-                width={189}
-                height={60}
-                alt="Logo2 "
-                className=""
-              />
-            </div>
-          </div>
+        <div className="opacity-60 mb-10">
+        <Navheader />
         </div>
         <div className="flex flex-col max-md:w-[90%] w-[80%] lg:w-[35%] py-10 max-md:mt-[20px] bg-white mx-auto rounded-lg text-center p-3 ">
           <form style={{ direction: "rtl" }} onSubmit={handleSubmit}>

@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import charit from "../assets/charity.jpg";
@@ -14,6 +14,7 @@ import Bell from "../assets/Bell.png";
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   // Function to toggle the visibility of the mobile menu
   const toggleMobileMenu = () => {
@@ -28,6 +29,29 @@ export default function Navheader() {
   email
     ? (profileImage = role === 1 ? gover : charit)
     : (profileImage = userImage);
+
+  const handleNotificationsClick = (event) => {
+    event.stopPropagation(); // Prevent the click event from bubbling up to the document body
+    setShowNotifications(!showNotifications);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showNotifications &&
+        !event.target.closest(".notifications") &&
+        !event.target.closest(".bell-icon")
+      ) {
+        setShowNotifications(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, [showNotifications]);
 
   return (
     <nav className="bg-white border-b-[3px]  border-[#0000004D] py-2 w-full">
@@ -50,14 +74,33 @@ export default function Navheader() {
               <span />
             </div>
 
-            <button className="mx-6">
+            <button
+              className={`mx-6 ${
+                window.location.pathname === "/first" ||
+                window.location.pathname === "/signin" ||
+                window.location.pathname === "/signup"
+                  ? "hidden"
+                  : "block"
+              }`}
+              onClick={handleNotificationsClick}
+            >
               <img src={Bell} />
             </button>
+
             <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
               <Link to="/first">تسجيل الدخول</Link>
             </p>
 
-            <Menu as="div" className="relative ml-3">
+            <Menu
+              as="div"
+              className={` ml-3 ${
+                window.location.pathname === "/first" ||
+                window.location.pathname === "/signin" ||
+                window.location.pathname === "/signup"
+                  ? "hidden"
+                  : "relative"
+              } `}
+            >
               <Menu.Button>
                 <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                   <span className="absolute -inset-1.5" />
@@ -197,6 +240,11 @@ export default function Navheader() {
             </ul>
           </div>
         </div>
+        {showNotifications && (
+          <div className="absolute top-[90px] right-[15%] px-4 py-6 rounded bg-[#a39776]">
+            <h4>أهلا بك في موقع جزل للعمل التطوعي</h4>
+          </div>
+        )}
       </div>
     </nav>
   );

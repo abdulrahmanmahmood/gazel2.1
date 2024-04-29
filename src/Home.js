@@ -37,14 +37,14 @@ const Home = () => {
       <div className="carousel w-full relative my-10">
         {/* Rounded arrow icon for "previous" button */}
         <button
-          className="absolute top-[50%] left-0 transform -translate-y-1/2 rounded-full bg-white p-2"
+          className="absolute top-[50%] left-0 transform -translate-y-1/2 rounded-full bg-white p-2 opacity-65"
           onClick={handlePreviousNews}
         >
           <IoMdArrowDropleft className="text-6xl text-gray-800" />
         </button>
         {/* Normal "next" button */}
         <button
-          className="absolute top-[50%] right-0 transform -translate-y-1/2 rounded-full bg-white p-2"
+          className="absolute top-[50%] right-0 transform -translate-y-1/2 rounded-full bg-white p-2 opacity-65"
           onClick={handleNextNews}
         >
           <IoMdArrowDropright className="text-6xl text-gray-800" />

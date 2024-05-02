@@ -18,8 +18,9 @@ import RegisterCase from "./RegisterCase";
 import AddCharity from "./AddCharity";
 import AllCases from "./AllCases";
 import AddOpport from "./AddOpport";
-import "@fontsource/cairo"; // 
-import "@fontsource/cairo/400.css"; 
+import "@fontsource/cairo"; //
+import "@fontsource/cairo/400.css";
+import SendNotifi from "./SendNotifi";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
   {
     path: "/addOpport",
     element: <AddOpport />,
+  },
+  {
+    path: "/sendnotifi",
+    element: <SendNotifi />,
   },
 ]);
 

@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navheader from "./components/Navheader";
 import Footer from "./components/Footer";
 import { useSelector } from "react-redux";
 import CoplainCom from "./components/CoplainCom";
+import axios from "axios";
 
 const Complaint = () => {
+  const [complaints, setComplaints] = useState([]);
+  useEffect(() => {
+    getAllComplements();
+  }, []);
+
+  // Get user data from redux store
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   );
@@ -28,15 +35,43 @@ const Complaint = () => {
     console.log(formData); // Print form data to the console
   };
 
+  const getAllComplements = () => {
+    axios
+      .get("http://gazl.runasp.net/api/Content/GetAllComplements")
+      .then((res) => {
+        console.log("fetchComplemnts success =>", res.data);
+        setComplaints(res.data);
+      })
+      .catch((error) => {
+        console.log("error in fetching complements", error);
+      });
+  };
+  const deleteComplement = (id) => {
+    axios
+      .delete(`http://gazl.runasp.net/api/Content/DeleteComplement/${id}`)
+      .then((res) => {
+        console.log("delete the complaint successfully", res.data);
+        getAllComplements();
+      })
+      .catch((error) => {
+        console.log("error in deleting complement ", error);
+      });
+  };
+
   return (
     <div className=" justify-between flex flex-col bg-[#CEB99E]">
       <Navheader />
 
       {role === 1 ? (
-        <div className="w-[70%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl min-h-screen">
-          <CoplainCom/>
-          <CoplainCom/>
-          <CoplainCom/>
+        <div className="w-[70%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl min-h-[80vh]">
+          <h3 className="text-center font-[700] text-3xl">جميع الشكاوي</h3>
+          {complaints?.map((comp) => (
+            <CoplainCom
+              complain={comp}
+              key={comp.id}
+              deleteComplement={deleteComplement}
+            />
+          ))}
         </div>
       ) : (
         <div className="w-[70%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl">

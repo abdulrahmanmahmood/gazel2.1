@@ -21,6 +21,7 @@ import Footer from "./components/Footer";
 const Home = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
   const [charities, setCharities] = useState([]);
+  const [Opports, setOpports] = useState([]);
 
   const fetchCharities = async () => {
     try {
@@ -34,35 +35,40 @@ const Home = () => {
       // Handle errors here
     }
   };
+  const fetchOpports = async () => {
+    try {
+      const response = await axios.get(
+        "http://gazl.runasp.net/api/Opportunity"
+      );
+      setOpports(response.data);
+      console.log("sucess fetching the Oports", response.data);
+    } catch (error) {
+      console.error("Error fetching Opports data:", error);
+      // Handle errors here
+    }
+  };
+  const DeleteOpport = (id) => {
+    console.log("delete opport ", id);
+    axios
+      .delete(`http://gazl.runasp.net/api/Opportunity/${id}`)
+      .then((res) => {
+        alert("تم حذف الفرصة بنجاح");
+        fetchOpports();
+      })
+      .catch((error) => {
+        console.log("error in delete Opport", error);
+      });
+  };
 
   useEffect(() => {
     fetchCharities();
+    fetchOpports();
     return () => {
       // Cleanup function to remove Opports when component unmounts
       // setPersons([]); // Clear persons state
     };
   }, []);
 
-  const Opports = [
-    {
-      position: [19.999837518893063, 42.60807025928232], // besha1
-      popup: "Riyadh",
-      data: "تم المعالجة",
-      type: "إطعام",
-      contactNumbers: "0500000000",
-      executingEntity: "جمعية حفظ النعمة",
-      requestNumber: 3,
-    },
-    {
-      position: [20.014159268682786, 42.61439655478464], // Jeddah
-      popup: "Jeddah",
-      data: "تم المعالجة",
-      type: "سداد ديون",
-      contactNumbers: "0500000000",
-      executingEntity: "جمعية تكاتف ",
-      requestNumber: 8,
-    },
-  ];
   const Staticcharities = [
     {
       position: [20.032193090419284, 42.616524629009824],
@@ -189,10 +195,10 @@ const Home = () => {
           />
           <Polyline positions={polyline} />
           {Opports &&
-            Opports.map((marker, index) => (
+            Opports?.map((marker, index) => (
               <Marker
                 key={index}
-                position={marker.position}
+                position={[marker.latitude, marker.longitude]}
                 icon={getMarkerIcon(marker.data)}
               >
                 <Popup>
@@ -200,7 +206,7 @@ const Home = () => {
                     <tbody className="border-[1.5px] border-black">
                       <tr className="border-[1.5px] border-black">
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.type || "N/A"}
+                          {marker.opportunityType || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           نوع الفرصة{" "}
@@ -208,7 +214,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.executingEntity || "N/A"}
+                          {marker.implementingEntity || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           الجهة المنفذة
@@ -216,7 +222,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.requestNumber || "N/A"}
+                          {marker.availableCount || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           العدد المتاح
@@ -224,7 +230,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.contactNumbers || "N/A"}
+                          {marker.contactNumber || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :رقم الاتصال
@@ -232,6 +238,14 @@ const Home = () => {
                       </tr>
                     </tbody>
                   </table>
+                  {role === 1 && (
+                    <button
+                      className="p-3 bg-red-600 rounded text-white m-3 mx-auto block"
+                      onClick={() => DeleteOpport(marker.id)}
+                    >
+                      حذف الفرصة
+                    </button>
+                  )}{" "}
                   <div className="flex justify-center"></div>
                 </Popup>
               </Marker>

@@ -10,11 +10,13 @@ import { useSelector } from "react-redux"; // Import useSelector hook to access 
 import { Link } from "react-router-dom";
 import userImage from "../assets/Ellipse 2.png";
 import Bell from "../assets/Bell.png";
+import axios from "axios";
 
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotfications] = useState([]);
 
   // Function to toggle the visibility of the mobile menu
   const toggleMobileMenu = () => {
@@ -33,6 +35,20 @@ export default function Navheader() {
     event.stopPropagation(); // Prevent the click event from bubbling up to the document body
     setShowNotifications(!showNotifications);
   };
+  const fetchAllNotifications = () => {
+    axios
+      .get("http://gazl.runasp.net/api/Notification")
+      .then((res) => {
+        console.log("fetch notificaions succefully", res.data);
+        setNotfications(res.data);
+      })
+      .catch((error) => {
+        console.log("error in fetching notificatins", error);
+      });
+  };
+  useEffect(() => {
+    fetchAllNotifications();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -178,6 +194,22 @@ export default function Navheader() {
             id="mobile-menu-2"
           >
             <ul className="flex flex-col-reverse mt-4  lg:flex-row lg:space-x-8 lg:mt-0 text-[24px] font-[600]">
+              {role === 1 && (
+                <li
+                  className={`p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                    window.location.pathname === "/sendnotifi"
+                      ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                      : "text-black "
+                  }`}
+                >
+                  <Link
+                    to="/sendnotifi"
+                    className="block py-2 pl-3 pr-4 text-center  rounded lg:bg-transparent  lg:p-0 "
+                  >
+                    ارسال اشعار
+                  </Link>
+                </li>
+              )}
               <li
                 className={`p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
                   window.location.pathname === "/complaint"
@@ -249,8 +281,15 @@ export default function Navheader() {
           </div>
         </div>
         {showNotifications && (
-          <div className="absolute top-[90px] right-[15%] px-4 py-6 rounded bg-[#a39776]">
-            <h4>أهلا بك في موقع جزل للعمل التطوعي</h4>
+          <div className="absolute top-[90px] right-[15%] px-1 py-3 w-[350px] rounded bg-[#a39776]">
+            {notifications?.map((notifi) => (
+              <h4
+                key={notifi.data}
+                className=" mx-auto text-center my-3 p-2 rounded-lg hover:bg-white"
+              >
+                {notifi.message}
+              </h4>
+            ))}
           </div>
         )}
       </div>

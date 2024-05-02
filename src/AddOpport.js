@@ -26,16 +26,14 @@ const AddOpport = () => {
 
   // State variables for form data and selected position
   const [formData, setFormData] = useState({
-    name: "",
-    contactNumbers: "",
-    requestType: "",
-    executingEntity: "",
+    availableCount: 0,
+    contactNumber: "",
+    opportunityType: "",
+    implementingEntity: "",
     saudiNationalID: "",
   });
   const [selectedPosition, setSelectedPosition] = useState(null);
-  const handleSaudiNationalIDChange = (e) => {
-    setFormData({ ...formData, saudiNationalID: e.target.value }); // Update saudiNationalID in the form data
-  };
+
   // Event listener to capture click events on the map
   const LocationFinder = () => {
     const map = useMapEvents({
@@ -49,24 +47,21 @@ const AddOpport = () => {
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.saudiNationalID.length < 10) {
-      alert("رقم الهوية يجب أن يكون على الأقل 10 أرقام");
-    }
+
     try {
       const dataToSend = {
-        name: formData.name,
-        contactNumbers: formData.contactNumbers,
-        requestType: formData.requestType,
+        availableCount: formData.availableCount,
+        contactNumber: formData.contactNumber,
+        opportunityType: formData.opportunityType,
         longitude: selectedPosition.lng,
         latitude: selectedPosition.lat,
-        executingEntity: formData.executingEntity,
-        saudiNationalID: "1100430121",
+        implementingEntity: formData.implementingEntity,
       };
       console.log("Sending data:", dataToSend);
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        "http://jazlhelp.runasp.net/api/Content",
+        "http://gazl.runasp.net/api/Opportunity",
         dataToSend,
         {
           headers: {
@@ -75,10 +70,10 @@ const AddOpport = () => {
         }
       );
 
-      // console.log("Data sent successfully:", response.data);
+      console.log("Data sent successfully:", response.data);
 
       // Reset form data and selected position after successful submission
-      setFormData({ name: "", contactNumbers: "", requestType: "" });
+      setFormData({ name: "", contactNumber: "", opportunityType: "" });
 
       setSelectedPosition(null);
       alert("تم إضافة الحالة بنجاح 👍");
@@ -113,7 +108,7 @@ const AddOpport = () => {
     <div className="w-full bg-[#ceb99c]  min-h-screen p-0 m-0">
       <Navheader />
       <MapHeader />
-      <div className="w-[97%] justify-between gap-3 flex flex-col-reverse  lg:flex-row  mx-auto mt-4">
+      <div className=" justify-between gap-3 flex flex-col-reverse  lg:flex-row  mx-auto mt-4 pl-3 mb-12">
         <MapContainer
           center={position}
           zoom={14}
@@ -149,22 +144,22 @@ const AddOpport = () => {
                   // backgroundPosition: "center",
                 }
               }
-              className="text-right"
+              className="text-right "
             >
               <div className="mb-4">
                 <label
                   htmlFor="name"
                   className="block text-sm font-medium text-white"
                 >
-                  الاسم
+                  العدد المتاح
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   id="name"
                   name="name"
-                  value={formData.name}
+                  value={formData.availableCount}
                   onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
+                    setFormData({ ...formData, availableCount: e.target.value })
                   }
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   required
@@ -172,18 +167,18 @@ const AddOpport = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="contactNumbers"
+                  htmlFor="contactNumber"
                   className="block text-sm font-medium text-white"
                 >
                   رقم الاتصال
                 </label>
                 <input
                   type="text"
-                  id="contactNumbers"
-                  name="contactNumbers"
-                  value={formData.contactNumbers}
+                  id="contactNumber"
+                  name="contactNumber"
+                  value={formData.contactNumber}
                   onChange={(e) =>
-                    setFormData({ ...formData, contactNumbers: e.target.value })
+                    setFormData({ ...formData, contactNumber: e.target.value })
                   }
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   required
@@ -191,35 +186,21 @@ const AddOpport = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="saudiNationalID"
+                  htmlFor="opportunityType"
                   className="block text-sm font-medium text-white"
                 >
-                  رقم الهوية
+                  نوع الفرصة
                 </label>
                 <input
                   type="text"
-                  id="saudiNationalID"
-                  name="saudiNationalID"
-                  value={formData.saudiNationalID}
-                  onChange={handleSaudiNationalIDChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="requestType"
-                  className="block text-sm font-medium text-white"
-                >
-                  نوع الحالة
-                </label>
-                <input
-                  type="text"
-                  id="requestType"
-                  name="requestType"
-                  value={formData.requestType}
+                  id="opportunityType"
+                  name="opportunityType"
+                  value={formData.opportunityType}
                   onChange={(e) =>
-                    setFormData({ ...formData, requestType: e.target.value })
+                    setFormData({
+                      ...formData,
+                      opportunityType: e.target.value,
+                    })
                   }
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
                   required
@@ -227,20 +208,20 @@ const AddOpport = () => {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="executingEntity"
+                  htmlFor="implementingEntity"
                   className="block text-sm font-medium text-white"
                 >
                   الجهة المنفذة
                 </label>
                 <input
                   type="text"
-                  id="executingEntity"
-                  name="executingEntity"
-                  value={formData.executingEntity}
+                  id="implementingEntity"
+                  name="implementingEntity"
+                  value={formData.implementingEntity}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      executingEntity: e.target.value,
+                      implementingEntity: e.target.value,
                     })
                   }
                   className="mt-1 p-2 border border-gray-300 rounded-md w-full"
@@ -265,7 +246,7 @@ const AddOpport = () => {
           )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

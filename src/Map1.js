@@ -16,62 +16,54 @@ import OrangeIcon from "./assets/placeholder.png";
 import { useSelector } from "react-redux"; // Import useSelector hook to access Redux state
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
+import Footer from "./components/Footer";
 
 const Home = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
-  const [persons, setPersons] = useState([]); // State variable to hold persons data
+  const [charities, setCharities] = useState([]);
 
-  // const fetchPersons = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://jazlhelp.runasp.net/api/content"
-  //     );
-  //     setPersons(response.data);
-  //     console.log("sucess fetching the data", response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching persons data:", error);
-  //     // Handle errors here
-  //   }
-  // };
+  const fetchCharities = async () => {
+    try {
+      const response = await axios.get(
+        "http://gazl.runasp.net/api/Associations"
+      );
+      setCharities(response.data);
+      console.log("sucess fetching the data", response.data);
+    } catch (error) {
+      console.error("Error fetching persons data:", error);
+      // Handle errors here
+    }
+  };
 
   useEffect(() => {
-    // fetchPersons();
+    fetchCharities();
     return () => {
-      // Cleanup function to remove markers when component unmounts
+      // Cleanup function to remove Opports when component unmounts
       // setPersons([]); // Clear persons state
     };
   }, []);
 
-  const markers = [
-    // {
-    //   position: [19.999837518893063, 42.60807025928232], // besha1
-    //   popup: "Riyadh",
-    //   data: "لم يتم المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "الجمعية الصحية الانسانية",
-    //   requestType: "احتياج الى سرير متحرك لذوي الاحتياجات الخاصة",
-    // },
-    // {
-    //   position: [20.014159268682786, 42.61439655478464], // Jeddah
-    //   popup: "Jeddah",
-    //   data: "تم المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "جمعية عايشين بكرم الله ",
-    //   requestType: "يحتاج الى مصروف شهري",
-    // },
-    // {
-    //   position: [19.99760046123814, 42.58951891442223], // Dammam
-    //   popup: "Dammam",
-    //   data: "جاري المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "جمعية  البر",
-    //   requestType: "يحتاج الى اثاث منزلي",
-    // },
+  const Opports = [
+    {
+      position: [19.999837518893063, 42.60807025928232], // besha1
+      popup: "Riyadh",
+      data: "تم المعالجة",
+      type: "إطعام",
+      contactNumbers: "0500000000",
+      executingEntity: "جمعية حفظ النعمة",
+      requestNumber: 3,
+    },
+    {
+      position: [20.014159268682786, 42.61439655478464], // Jeddah
+      popup: "Jeddah",
+      data: "تم المعالجة",
+      type: "سداد ديون",
+      contactNumbers: "0500000000",
+      executingEntity: "جمعية تكاتف ",
+      requestNumber: 8,
+    },
   ];
-  const charities = [
+  const Staticcharities = [
     {
       position: [20.032193090419284, 42.616524629009824],
       name: "جمعية البر الخيرية بيشة",
@@ -167,18 +159,6 @@ const Home = () => {
     `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
   );
 
-  const LocationFinderDummy = () => {
-    const map = useMapEvents({
-      click(e) {
-        console.log(e.latlng);
-      },
-    });
-    return null;
-  };
-  useEffect(() => {
-    console.log("persons", persons);
-  }, [persons]);
-
   const limeOptions = { color: "red" };
 
   const polyline = [
@@ -186,11 +166,10 @@ const Home = () => {
     [42.60843559357457, 19.995029904781568],
     [42.58810570306765, 20.007926687340927],
   ];
-
   return (
-    <div className="w-full bg-[#ceb99c] h-[100vh] p-0 m-0 ">
+    <div className="w-full bg-[#ceb99c] min-h-screen  m-0 ">
       <Navheader />
-      <MapHeader/>
+      <MapHeader />
       <h1 className="text-4xl font-bold text-center my-8 text-black ">
         الجمعيات الخيرية وفرص التطوع في المحافظة
       </h1>
@@ -209,89 +188,8 @@ const Home = () => {
             url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           />
           <Polyline positions={polyline} />
-          {persons &&
-            persons.map((person, index) => (
-              <Marker
-                key={index}
-                position={[person.latitude, person.longitude]}
-                icon={getMarkerIcon(person.color)}
-              >
-                <Popup>
-                  <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
-                    <tbody className="border-[1.5px] border-black">
-                      <tr className="border-[1.5px] border-black">
-                        <td className="border-[1.5px] border-black p-1">
-                          {person.name || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          الاسم:
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {person.executingEntity || "N/A"}
-                        </td>
-
-                        <td className="border-[1.5px] border-black p-1">
-                          الجهة المنفذة
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {person.requestType || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :نوع الحالة
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td
-                          className={`border-[1.5px] border-black p-1 ${
-                            person.color == "Red" ? "bg-red-500" : ""
-                          }`}
-                        ></td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :النطاق
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {person.contactNumbers || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :رقم الاتصال
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="flex justify-center">
-                    <button
-                      className="text-blue-500 cursor-pointer p-1 m-1 "
-                      onClick={() =>
-                        handleUpdate(
-                          person.longitude,
-                          person.latitude,
-                          person.id,
-                          person.color
-                        )
-                      }
-                    >
-                      تعديل هذه الحالة
-                    </button>
-                    <button
-                      className="text-red-500 cursor-pointer ml-4 p-1 m-1"
-                      onClick={() => handleDelete(person.id)}
-                    >
-                      مسح هذه الحالة
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          {markers &&
-            markers.map((marker, index) => (
+          {Opports &&
+            Opports.map((marker, index) => (
               <Marker
                 key={index}
                 position={marker.position}
@@ -302,10 +200,10 @@ const Home = () => {
                     <tbody className="border-[1.5px] border-black">
                       <tr className="border-[1.5px] border-black">
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.name || "N/A"}
+                          {marker.type || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
-                          الاسم:
+                          نوع الفرصة{" "}
                         </td>
                       </tr>
                       <tr>
@@ -318,10 +216,10 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.requestType || "N/A"}
+                          {marker.requestNumber || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
-                          :نوع الحالة
+                          العدد المتاح
                         </td>
                       </tr>
                       <tr>
@@ -334,17 +232,7 @@ const Home = () => {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="flex justify-center">
-                    <button className="text-blue-500 cursor-pointer p-1 m-1">
-                      تعديل هذه الحالة
-                    </button>
-                    <button
-                      className="text-red-500 cursor-pointer ml-4 p-1 m-1"
-                      onClick={() => handleDelete(marker.id)}
-                    >
-                      مسح هذه الحالة
-                    </button>
-                  </div>
+                  <div className="flex justify-center"></div>
                 </Popup>
               </Marker>
             ))}
@@ -352,7 +240,7 @@ const Home = () => {
             charities.map((charity, index) => (
               <Marker
                 key={index}
-                position={charity.position}
+                position={[charity.latitude, charity.longitude]}
                 icon={getMarkerIcon("red")}
               >
                 <Popup>
@@ -369,7 +257,7 @@ const Home = () => {
 
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {charity.number || "N/A"}
+                          {charity.contact || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :رقم الاتصال
@@ -383,16 +271,17 @@ const Home = () => {
         </MapContainer>
       </div>
 
-      <div className="flex flex-row gap-4 w-[30%]   my-5 ml-20 pl-12">
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl">
+      <div className="flex flex-row gap-4 w-[30%]   mt-3 pb-10 h-[10vh] ml-20 pl-12">
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
           جمعيات خيرية
           <div className="bg-red-700 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl">
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
           فرص تطوعية
           <div className="bg-green-600 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

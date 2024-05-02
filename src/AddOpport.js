@@ -16,6 +16,7 @@ import OrangeIcon from "./assets/placeholder.png";
 import { Icon } from "leaflet";
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
+import Footer from "./components/Footer";
 const AddOpport = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
 
@@ -109,7 +110,7 @@ const AddOpport = () => {
   };
 
   return (
-    <div className="w-full bg-[#ceb99c]   p-0 m-0">
+    <div className="w-full bg-[#ceb99c]  min-h-screen p-0 m-0">
       <Navheader />
       <MapHeader />
       <div className="w-[97%] justify-between gap-3 flex flex-col-reverse  lg:flex-row  mx-auto mt-4">
@@ -256,13 +257,16 @@ const AddOpport = () => {
           ) : (
             <div className="mt-[15%] my-auto  lg:mt-[40%] pb-16 text-center">
               <h1 className="my-auto  text-white text-2xl  font-[800]">
-                إختر مكان الحالة ثم ادخل البيانات{" "}
+                إختر مكان الفرصة التطوعية <br />
+                <br />
+                <br /> ثم ادخل البيانات{" "}
               </h1>
             </div>
           )}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };
-export default AddOpport
+export default AddOpport;

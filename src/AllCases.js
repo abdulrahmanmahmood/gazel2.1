@@ -16,78 +16,30 @@ import OrangeIcon from "./assets/placeholder.png";
 import { useSelector } from "react-redux"; // Import useSelector hook to access Redux state
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
+import Footer from "./components/Footer";
 
 const AllCases = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
   const [persons, setPersons] = useState([]); // State variable to hold persons data
 
-  // const fetchPersons = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "http://jazlhelp.runasp.net/api/content"
-  //     );
-  //     setPersons(response.data);
-  //     console.log("sucess fetching the data", response.data);
-  //   } catch (error) {
-  //     console.error("Error fetching persons data:", error);
-  //     // Handle errors here
-  //   }
-  // };
+  const fetchPersons = async () => {
+    try {
+      const response = await axios.get("http://gazl.runasp.net/api/Content");
+      setPersons(response.data);
+      console.log("sucess fetching the data", response.data);
+    } catch (error) {
+      console.error("Error fetching persons data:", error);
+      // Handle errors here
+    }
+  };
 
   useEffect(() => {
-    // fetchPersons();
+    fetchPersons();
     return () => {
       // Cleanup function to remove markers when component unmounts
       // setPersons([]); // Clear persons state
     };
   }, []);
-
-  const markers = [
-    // {
-    //   position: [19.999837518893063, 42.60807025928232], // besha1
-    //   popup: "Riyadh",
-    //   data: "لم يتم المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "الجمعية الصحية الانسانية",
-    //   requestType: "احتياج الى سرير متحرك لذوي الاحتياجات الخاصة",
-    // },
-    // {
-    //   position: [20.014159268682786, 42.61439655478464], // Jeddah
-    //   popup: "Jeddah",
-    //   data: "تم المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "جمعية عايشين بكرم الله ",
-    //   requestType: "يحتاج الى مصروف شهري",
-    // },
-    // {
-    //   position: [19.99760046123814, 42.58951891442223], // Dammam
-    //   popup: "Dammam",
-    //   data: "جاري المعالجة",
-    //   name: "مواطن فلان الفلان",
-    //   contactNumbers: "0500000000",
-    //   executingEntity: "جمعية  البر",
-    //   requestType: "يحتاج الى اثاث منزلي",
-    // },
-  ];
-  const charities = [
-    {
-      position: [20.032193090419284, 42.616524629009824],
-      name: "جمعية البر الخيرية بيشة",
-      number: "0551043592",
-    },
-    {
-      position: [20.010703536045963, 42.614877905399844],
-      name: "جمعية التنمية الأهلية بوسط بيشة",
-      number: "0559678871",
-    },
-    {
-      position: [20.020013433653432, 42.64141196122175],
-      name: "جمعية كر لحفظ النعمة",
-      number: "0533384488",
-    },
-  ];
 
   const getMarkerIcon = (data) => {
     if (data === "لم يتم المعالجة") {
@@ -134,10 +86,10 @@ const AllCases = () => {
   const handleDelete = async (id) => {
     if (typeof window !== "undefined") {
       try {
-        await axios.delete(`http://jazlhelp.runasp.net/api/content/${id}`);
+        await axios.delete(`http://gazl.runasp.net/api/Content/${id}`);
         console.log("Person deleted successfully!");
         // Update state or refetch data if necessary
-        // fetchPersons();
+        fetchPersons();
       } catch (error) {
         console.error("Error deleting person:", error);
         // Handle errors here
@@ -167,14 +119,6 @@ const AllCases = () => {
     `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
   );
 
-  const LocationFinderDummy = () => {
-    const map = useMapEvents({
-      click(e) {
-        console.log(e.latlng);
-      },
-    });
-    return null;
-  };
   useEffect(() => {
     console.log("persons", persons);
   }, [persons]);
@@ -188,7 +132,7 @@ const AllCases = () => {
   ];
 
   return (
-    <div className="w-full bg-[#ceb99c] h-[100vh] p-0 m-0 ">
+    <div className="w-full bg-[#ceb99c]  p-0 m-0 ">
       <Navheader />
       <MapHeader />
       <h1 className="text-4xl font-bold text-center my-8 text-black ">
@@ -290,109 +234,24 @@ const AllCases = () => {
                 </Popup>
               </Marker>
             ))}
-          {markers &&
-            markers.map((marker, index) => (
-              <Marker
-                key={index}
-                position={marker.position}
-                icon={getMarkerIcon(marker.data)}
-              >
-                <Popup>
-                  <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
-                    <tbody className="border-[1.5px] border-black">
-                      <tr className="border-[1.5px] border-black">
-                        <td className="border-[1.5px] border-black p-1">
-                          {marker.name || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          الاسم:
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {marker.executingEntity || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          الجهة المنفذة
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {marker.requestType || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :نوع الحالة
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {marker.contactNumbers || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :رقم الاتصال
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="flex justify-center">
-                    <button className="text-blue-500 cursor-pointer p-1 m-1">
-                      تعديل هذه الحالة
-                    </button>
-                    <button
-                      className="text-red-500 cursor-pointer ml-4 p-1 m-1"
-                      onClick={() => handleDelete(marker.id)}
-                    >
-                      مسح هذه الحالة
-                    </button>
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
-          {charities &&
-            charities.map((charity, index) => (
-              <Marker
-                key={index}
-                position={charity.position}
-                icon={getMarkerIcon("red")}
-              >
-                <Popup>
-                  <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
-                    <tbody className="border-[1.5px] border-black">
-                      <tr className="border-[1.5px] border-black">
-                        <td className="border-[1.5px] border-black p-1">
-                          {charity.name || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          الاسم:
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td className="border-[1.5px] border-black p-1">
-                          {charity.number || "N/A"}
-                        </td>
-                        <td className="border-[1.5px] border-black p-1">
-                          :رقم الاتصال
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </Popup>
-              </Marker>
-            ))}
         </MapContainer>
       </div>
 
-      <div className="flex flex-row gap-4 w-[30%]   my-5 ml-20 pl-12">
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl">
-          جمعيات خيرية
+      <div className="flex flex-row gap-4 w-[30%]   mt-3 pb-10 h-[10vh] ml-20 pl-12">
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
+          يحتاج الى مساعدة{" "}
           <div className="bg-red-700 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl">
-          فرص تطوعية
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
+          جاري التطوير{" "}
           <div className="bg-green-600 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36] ">
+          تم التطوير{" "}
+          <div className="bg-orange-300 rounded-full w-[15px] h-[15px] my-auto" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

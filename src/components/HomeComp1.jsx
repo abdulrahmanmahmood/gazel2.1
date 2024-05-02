@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import cloudImag from "../assets/cloud.png";
 import HomeImg1 from "../assets/homeImg1.png";
+import Besha2 from "../assets/Besha2.jpeg";
+import Besha3 from "../assets/Besha3.jpeg";
 
 const HomeComp1 = () => {
+  const images = [HomeImg1, Besha2, Besha3];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const handleVolunteerRegistration = () => {
     window.open("https://forms.gle/ubqVDhtUkKhVHix16", "_blank");
   };
 
   const handleHumanitarianRegistration = () => {
     window.open("https://forms.gle/xBZieWw92nT5hEMj7", "_blank");
+  };
+
+  const handleDotClick = (index) => {
+    setCurrentIndex(index);
   };
   return (
     <div className="w-full bg-white ">
@@ -24,10 +33,35 @@ const HomeComp1 = () => {
             تعريف بالموقع
           </h3>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 px-[5%] justify-between">
-          <img src={HomeImg1} alt="" className="mx-auto max-md:w-full" />
-          <div className=" text-right  justify-between flex flex-col ">
-            <p className="font-Cairo text-2xl font-semibold leading-11 text-right p-3 my-3">
+        <div className="grid grid-cols-1 lg:grid-cols-5 mx-[3%]  justify-between md:gap-10  lg:h-[70vh]">
+          <div className="col-span-3    max-md:w-full relative">
+            <div>
+              {images.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt=""
+                  className={`w-[80%] h-[70vh]  mx-auto rounded-lg ${
+                    index === currentIndex ? "" : "hidden"
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="text-center text-5xl font-bold flex justify-center absolute bottom-0 left-0 w-full -mb-7">
+              {images.map((_, index) => (
+                <div
+                  key={index}
+                  className={`h-3 w-3 rounded-full  mx-1 cursor-pointer ${
+                    index === currentIndex ? "bg-black" : "bg-gray-400"
+                  }`}
+                  onClick={() => handleDotClick(index)}
+                ></div>
+              ))}
+            </div>
+          </div>
+
+          <div className=" text-right  justify-between flex flex-col col-span-2 ">
+            <p className=" text-2xl font-[500]  text-right p-3 my-3">
               نفذ فريق جزل التطوعي بالتعاون مع محافظة بيشة وجامعة بيشة فكرة موقع
               إلكتروني يهتم بالحالات الإنسانية والعمل التطوعي بالمحافظة من خلال
               متابعة الاعمال عبر خريطة تفاعلية يسهل الإجراءات ويميز هذا الموقع
@@ -37,7 +71,7 @@ const HomeComp1 = () => {
             <h3 className="font-Cairo text-2xl font-bold leading-11 text-right px-3 ">
               كيف يمكنني تسجيل حالتي الإنسانية ؟
             </h3>
-            <p className="font-Cairo text-2xl font-semibold leading-11 text-right p-3 my-3">
+            <p className="font-Cairo text-2xl font-[500] leading-11 text-right p-3 my-3">
               يمكنك تسجيل حالتك الإنسانية عبر خانة التسجيل في " الرئيسية " حيث
               ستصل للجهات ذات العلاقة حكومية كانت او أهلية ويمكن التفاعل معها
               عبر القطاع الثالث

@@ -5,21 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { setAuthData } from "./rtk/slices/auth";
 import background from "./assets/background.png";
-import nextLogo from "./assets/nextLogo.png";
-import baseLogo from "./assets/baseLogo.png";
-
-import logo1 from "./assets/ub 1.png";
-import logo2 from "./assets/agaweed.png";
-import logo3 from "./assets/gazl.png";
 import Navheader from "./components/Navheader";
-
+import Footer from "./components/Footer";
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [isVolunteer, setIsVolunteer] = useState(true);
+  const [Role, setRole] = useState(true);
   const [showVolunteerDropdown, setShowVolunteerDropdown] = useState(true);
   const [showGovernmentDropdown, setShowGovernmentDropdown] = useState(false);
   const [volunteerCharity, setVolunteerCharity] = useState(0); // Define state variable for volunteer charity
@@ -51,12 +45,12 @@ export const Signup = () => {
       saudiNationalID: nationalID, // Add the saudiNationalID field with the appropriate value
       password,
       confirmPassword,
-      isVolunteer,
+      Role,
     };
 
-    if (isVolunteer) {
+    if (Role == 2) {
       userData.charities = parseInt(volunteerCharity);
-    } else {
+    } else if (Role == 1) {
       userData.goverrateAgancy = parseInt(governmentAgency);
     }
 
@@ -64,7 +58,7 @@ export const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://jazlhelp.runasp.net/api/Account/register",
+        "http://gazl.runasp.net/api/Account/register",
         userData
       );
       console.log("Registration successful:", response.data);
@@ -89,16 +83,26 @@ export const Signup = () => {
     }
   };
 
-  const handleVolunteerRadioChange = () => {
-    setIsVolunteer(true);
+  const handleVolSocietRadioChange = () => {
+    setRole(2);
     setShowVolunteerDropdown(true);
     setShowGovernmentDropdown(false);
   };
 
   const handleGovernmentRadioChange = () => {
-    setIsVolunteer(false);
+    setRole(1);
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(true);
+  };
+  const handleThirdPartRadioChange = () => {
+    setRole(3);
+    setShowVolunteerDropdown(false);
+    setShowGovernmentDropdown(false);
+  };
+  const handleUserRadioChange = () => {
+    setRole(0);
+    setShowVolunteerDropdown(false);
+    setShowGovernmentDropdown(false);
   };
 
   const handleVolunteerCharityChange = (e) => {
@@ -119,7 +123,7 @@ export const Signup = () => {
         }}
       >
         <div className="opacity-60 mb-10">
-        <Navheader />
+          <Navheader />
         </div>
         <div className=" max-md:mt-[20px]   mx-auto  text-center p-3 ">
           <form
@@ -214,7 +218,7 @@ export const Signup = () => {
               </div>
             </div>
 
-            <div className="flex flex-row  justify-between max-md:w-[90%]  w-[40%] mx-auto max-md:px-5 lg:pr-[85px] items-center content-between">
+            <div className="flex flex-row  justify-between max-md:w-[90%]  w-[70%] mx-auto max-md:px-5 lg:pr-[85px] items-center content-between">
               <div className=" ">
                 <label
                   className=" text-2xl font-bold text-[#3f4934] bg-white p-1 rounded-lg  inline-block "
@@ -227,7 +231,7 @@ export const Signup = () => {
                   type="radio"
                   name="isVolunteer"
                   id="flexRadioDefault1"
-                  checked={!isVolunteer}
+                  // checked={!isVolunteer}
                   onChange={handleGovernmentRadioChange}
                 />
               </div>
@@ -237,15 +241,46 @@ export const Signup = () => {
                   className="form-check-label text-2xl font-bold text-[#3f4934] bg-white p-1 rounded-lg  inline-block "
                   htmlFor="flexRadioDefault2"
                 >
-                  متطوع
+                  جمعية أهلية
                 </label>
                 <input
                   className=" w-[20px] h-[20px]"
                   type="radio"
                   name="isVolunteer"
                   id="flexRadioDefault2"
-                  checked={isVolunteer}
-                  onChange={handleVolunteerRadioChange}
+                  // checked={isVolunteer}
+                  onChange={handleVolSocietRadioChange}
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="busness"
+                  className="form-check-label text-2xl font-bold text-[#3f4934] bg-white p-1 rounded-lg  inline-block "
+                >
+                  القطاع الثالث
+                </label>
+                <input
+                  type="radio"
+                  className="w-[20px] h-[20px] "
+                  name="isVolunteer"
+                  id="busness"
+                  onChange={handleThirdPartRadioChange}
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="user"
+                  className="form-check-label text-2xl font-bold text-[#3f4934] bg-white p-1 rounded-lg  inline-block "
+                >
+                  زائر
+                </label>
+                <input
+                  type="radio"
+                  className="w-[20px] h-[20px] "
+                  name="isVolunteer"
+                  id="user"
+                  onChange={handleUserRadioChange}
                 />
               </div>
             </div>
@@ -363,28 +398,7 @@ export const Signup = () => {
           </form>
         </div>
       </div>
-      <div className="w-full max-md:h-[20vh] h-[30vh] bg-[#CEB99E]">
-        <h1 className="text-white text-4xl pr-7 font-[800] mr-5 pt-5 text-right ">
-          شركاء النجاح{" "}
-        </h1>
-        <div className="max-md:h-[10vh] h-[20vh] flex flex-row-reverse  items-baseline justify-start pr-10">
-          <img
-            src={logo1}
-            className="max-md:w-[60px] max-md:h-[60px] w-[120px] h-[120px] mx-[20px] "
-            alt="Logo1"
-          />
-          <img
-            src={logo2}
-            className="max-md:w-[60px] max-md:h-[60px] w-[120px] h-[120px] mx-[20px] "
-            alt="Logo2"
-          />
-          <img
-            src={logo3}
-            className="max-md:w-[60px] max-md:h-[60px] w-[120px] h-[120px] mx-[20px] "
-            alt="besha"
-          />
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

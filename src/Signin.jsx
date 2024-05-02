@@ -36,7 +36,7 @@ const Signin = () => {
 
     try {
       const response = await axios.post(
-        "https://api.socialcasesbisha.com/Account/Login",
+        "http://gazl.runasp.net/api/Account/Login",
         userData
       );
       console.log("Login successful:", response.data);
@@ -50,7 +50,7 @@ const Signin = () => {
         })
       );
       // Redirect to home page or any other route
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
 
@@ -77,7 +77,7 @@ const Signin = () => {
         }}
       >
         <div className="opacity-60 mb-10">
-        <Navheader />
+          <Navheader />
         </div>
         <div className="flex flex-col max-md:w-[90%] w-[80%] lg:w-[35%] py-10 max-md:mt-[20px] bg-white mx-auto rounded-lg text-center p-3 ">
           <form style={{ direction: "rtl" }} onSubmit={handleSubmit}>

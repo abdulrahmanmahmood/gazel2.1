@@ -18,6 +18,8 @@ import RegisterCase from "./RegisterCase";
 import AddCharity from "./AddCharity";
 import AllCases from "./AllCases";
 import AddOpport from "./AddOpport";
+import "@fontsource/cairo"; // 
+import "@fontsource/cairo/400.css"; 
 
 const router = createBrowserRouter([
   {

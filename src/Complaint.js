@@ -34,7 +34,7 @@ const Complaint = () => {
         >
           <div className="mb-4">
             <label className="block text-sm font-bold mb-5" htmlFor="username">
-              اسم العميل
+              الأسم
             </label>
             <input
               type="text"
@@ -43,7 +43,7 @@ const Complaint = () => {
               value={formData.username}
               onChange={handleInputChange}
               className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
-              placeholder="اسم العميل"
+              placeholder="الأسم "
             />
           </div>
           <div className="mb-4">

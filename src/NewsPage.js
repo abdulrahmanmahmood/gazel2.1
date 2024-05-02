@@ -2,6 +2,7 @@ import React from "react";
 import Navheader from "./components/Navheader";
 import { newsData } from "./components/newsData";
 import News from "./components/News";
+import Footer from "./components/Footer";
 
 const NewsPage = () => {
   return (
@@ -19,13 +20,14 @@ const NewsPage = () => {
               <h2 className="font-Cairo text-3xl font-bold leading-[67.46px] text-right">
                 {item.title}
               </h2>
-              <p className="font-Cairo text-2xl font-semibold leading-[44.98px] text-right  line-clamp-[10]">
+              <p className="font-Cairo text-2xl font-[500] leading-[44.98px] text-right  line-clamp-[10]">
                 {item.News}
               </p>
             </div>
           </div>
         </div>
       ))}
+      <Footer/>
     </div>
   );
 };

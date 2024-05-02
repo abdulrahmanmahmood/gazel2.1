@@ -16,6 +16,7 @@ import OrangeIcon from "./assets/placeholder.png";
 import { Icon } from "leaflet";
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
+import Footer from "./components/Footer";
 
 const SetAddress = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
@@ -66,7 +67,7 @@ const SetAddress = () => {
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        "http://jazlhelp.runasp.net/api/Content",
+        "http://gazl.runasp.net/api/Content",
         dataToSend,
         {
           headers: {
@@ -110,7 +111,7 @@ const SetAddress = () => {
   };
 
   return (
-    <div className="w-full bg-[#ceb99c]   p-0 m-0">
+    <div className="w-full bg-[#ceb99c]  min-h-screen m-0 ">
       <Navheader />
       <MapHeader />
       <div className="w-[97%] justify-between gap-3 flex flex-col-reverse  lg:flex-row  mx-auto mt-4">
@@ -263,6 +264,7 @@ const SetAddress = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

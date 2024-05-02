@@ -23,7 +23,6 @@ export default function Navheader() {
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   ); // Access user role from
-  const logIn = false;
   let profileImage;
 
   email
@@ -86,14 +85,19 @@ export default function Navheader() {
             >
               <img src={Bell} />
             </button>
-
-            <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
-              <Link to="/first">تسجيل الدخول</Link>
-            </p>
+            {displayName ? (
+              <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
+                {displayName}
+              </p>
+            ) : (
+              <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
+                <Link to="/first">تسجيل الدخول</Link>
+              </p>
+            )}
 
             <Menu
               as="div"
-              className={` ml-3 ${
+              className={`  ml-3 ${
                 window.location.pathname === "/first" ||
                 window.location.pathname === "/signin" ||
                 window.location.pathname === "/signup"
@@ -121,16 +125,16 @@ export default function Navheader() {
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
               >
-                <Menu.Items className="absolute right-0 z-[1000] mt-2 w-48 origin-top-right rounded-md bg-[#c0bc9d] py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className="absolute flex flex-col right-0 z-[1000] mt-2 w-48 origin-top-right rounded-md bg-[#c0bc9d] py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <Menu.Item>
                     {({ active }) => (
                       <Link
                         to={"/profilePage"}
-                        className={`
-                          active ? "bg-gray-100" : "",
+                        className={` hover:bg-white text-center my-2
+                          ${active} ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-900 no-underline"`}
                       >
-                        Your Profile
+                        الصفحة الشخصية
                       </Link>
                     )}
                   </Menu.Item>
@@ -153,11 +157,11 @@ export default function Navheader() {
                     {({ active }) => (
                       <Link
                         to="/signin"
-                        className={`
-                          active ? "bg-gray-100" : "",
+                        className={`hover:bg-white text-center my-2
+                          ${active} ? "bg-gray-100" : "",
                           "block px-4 py-2 text-sm text-gray-900 no-underline"`}
                       >
-                        Sign out
+                        تسجيل الخروج
                       </Link>
                     )}
                   </Menu.Item>
@@ -190,7 +194,11 @@ export default function Navheader() {
               </li>
               <li
                 className={`text-black p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
-                  window.location.pathname === "/map1"
+                  window.location.pathname === "/map1" ||
+                  window.location.pathname === "/allcases" ||
+                  window.location.pathname === "/addOpport" ||
+                  window.location.pathname === "/registercase" ||
+                  window.location.pathname === "/addcharity"
                     ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
                     : "text-black "
                 }`}

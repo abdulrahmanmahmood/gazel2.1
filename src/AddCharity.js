@@ -17,6 +17,7 @@ import { Icon } from "leaflet";
 import axios from "axios"; // Import Axios for HTTP requests
 import { useDispatch } from "react-redux";
 import MapHeader from "./components/MapHeader";
+import Footer from "./components/Footer";
 
 const AddCharity = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
@@ -25,90 +26,83 @@ const AddCharity = () => {
     (state) => state.auth
   );
 
-    // State variables for form data and selected position
-    const [formData, setFormData] = useState({
-      name: "",
-      contactNumbers: "",
-      requestType: "",
-      executingEntity: "",
-      saudiNationalID: "",
+  // State variables for form data and selected position
+  const [formData, setFormData] = useState({
+    name: "",
+    contactNumbers: "",
+    requestType: "",
+    executingEntity: "",
+    saudiNationalID: "",
+  });
+  const [selectedPosition, setSelectedPosition] = useState(null);
+
+  // Event listener to capture click events on the map
+  const LocationFinder = () => {
+    const map = useMapEvents({
+      click(e) {
+        setSelectedPosition(e.latlng); // Update selected position
+      },
     });
-    const [selectedPosition, setSelectedPosition] = useState(null);
-    const handleSaudiNationalIDChange = (e) => {
-      setFormData({ ...formData, saudiNationalID: e.target.value }); // Update saudiNationalID in the form data
-    };
-    // Event listener to capture click events on the map
-    const LocationFinder = () => {
-      const map = useMapEvents({
-        click(e) {
-          setSelectedPosition(e.latlng); // Update selected position
-        },
+    return null;
+  };
+
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const dataToSend = {
+        name: formData.name,
+        contact: formData.contactNumbers,
+        longitude: selectedPosition.lng,
+        latitude: selectedPosition.lat,
+      };
+      console.log("Sending data:", dataToSend);
+
+      // Send the form data to the endpoint using Axios
+      const response = await axios.post(
+        "http://gazl.runasp.net/api/Associations",
+        dataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+          },
+        }
+      );
+
+      // console.log("Data sent successfully:", response.data);
+
+      // Reset form data and selected position after successful submission
+      setFormData({ name: "", contactNumbers: "", requestType: "" });
+
+      setSelectedPosition(null);
+      alert("تم إضافة الجمعية بنجاح 👍");
+    } catch (error) {
+      console.error("Error sending data:", error);
+      // Handle errors here
+      alert("خطأ في ", error.message ? error.message : error);
+    }
+  };
+
+  // Function to get marker icon based on data
+  const getMarkerIcon = (data) => {
+    if (data === "لم يتم المعالجة") {
+      return new Icon({
+        iconUrl: redIcon,
+        iconSize: [38, 38],
       });
-      return null;
-    };
-  
-    // Function to handle form submission
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      if (formData.saudiNationalID.length < 10) {
-        alert("رقم الهوية يجب أن يكون على الأقل 10 أرقام");
-      }
-      try {
-        const dataToSend = {
-          name: formData.name,
-          contactNumbers: formData.contactNumbers,
-          requestType: formData.requestType,
-          longitude: selectedPosition.lng,
-          latitude: selectedPosition.lat,
-          executingEntity: formData.executingEntity,
-          saudiNationalID: "1100430121",
-        };
-        console.log("Sending data:", dataToSend);
-  
-        // Send the form data to the endpoint using Axios
-        const response = await axios.post(
-          "http://jazlhelp.runasp.net/api/Content",
-          dataToSend,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Add the Authorization header with the token
-            },
-          }
-        );
-  
-        // console.log("Data sent successfully:", response.data);
-  
-        // Reset form data and selected position after successful submission
-        setFormData({ name: "", contactNumbers: "", requestType: "" });
-  
-        setSelectedPosition(null);
-        alert("تم إضافة الحالة بنجاح 👍");
-      } catch (error) {
-        console.error("Error sending data:", error);
-        // Handle errors here
-        alert("خطأ في ", error.message ? error.message : error);
-      }
-    };
-  
-    // Function to get marker icon based on data
-    const getMarkerIcon = (data) => {
-      if (data === "لم يتم المعالجة") {
-        return new Icon({
-          iconUrl: redIcon,
-          iconSize: [38, 38],
-        });
-      } else if (data === "تم المعالجة") {
-        return new Icon({
-          iconUrl: greenIcon,
-          iconSize: [38, 38],
-        });
-      } else if (data === "جاري المعالجة") {
-        return new Icon({
-          iconUrl: OrangeIcon,
-          iconSize: [38, 38],
-        });
-      }
-    };
+    } else if (data === "تم المعالجة") {
+      return new Icon({
+        iconUrl: greenIcon,
+        iconSize: [38, 38],
+      });
+    } else if (data === "جاري المعالجة") {
+      return new Icon({
+        iconUrl: OrangeIcon,
+        iconSize: [38, 38],
+      });
+    }
+  };
 
   return (
     <div className="w-full bg-[#ceb99c] h-screen  p-0 m-0">
@@ -157,7 +151,7 @@ const AddCharity = () => {
                   htmlFor="name"
                   className="block text-sm font-medium text-white"
                 >
-                  الاسم
+                  اسم الجمعية
                 </label>
                 <input
                   type="text"
@@ -190,64 +184,6 @@ const AddCharity = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="saudiNationalID"
-                  className="block text-sm font-medium text-white"
-                >
-                  رقم الهوية
-                </label>
-                <input
-                  type="text"
-                  id="saudiNationalID"
-                  name="saudiNationalID"
-                  value={formData.saudiNationalID}
-                  onChange={handleSaudiNationalIDChange}
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="requestType"
-                  className="block text-sm font-medium text-white"
-                >
-                  نوع الحالة
-                </label>
-                <input
-                  type="text"
-                  id="requestType"
-                  name="requestType"
-                  value={formData.requestType}
-                  onChange={(e) =>
-                    setFormData({ ...formData, requestType: e.target.value })
-                  }
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  required
-                />
-              </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="executingEntity"
-                  className="block text-sm font-medium text-white"
-                >
-                  الجهة المنفذة
-                </label>
-                <input
-                  type="text"
-                  id="executingEntity"
-                  name="executingEntity"
-                  value={formData.executingEntity}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      executingEntity: e.target.value,
-                    })
-                  }
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  required
-                />
-              </div>
               <button
                 type="submit"
                 className="w-full bg-[#b8b39c] text-white py-2 px-4 rounded-md hover:bg[#b8b39c]                "
@@ -264,6 +200,7 @@ const AddCharity = () => {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

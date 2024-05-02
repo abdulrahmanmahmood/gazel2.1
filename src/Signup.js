@@ -7,6 +7,7 @@ import { setAuthData } from "./rtk/slices/auth";
 import background from "./assets/background.png";
 import Navheader from "./components/Navheader";
 import Footer from "./components/Footer";
+import { baseUrl } from "./axios/axiosClient";
 export const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -58,7 +59,7 @@ export const Signup = () => {
 
     try {
       const response = await axios.post(
-        "http://gazl.runasp.net/api/Account/register",
+        `${baseUrl}/api/Account/register`,
         userData
       );
       console.log("Registration successful:", response.data);

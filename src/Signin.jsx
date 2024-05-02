@@ -12,6 +12,7 @@ import logo1 from "./assets/ub 1.png";
 import logo2 from "./assets/agaweed.png";
 import logo3 from "./assets/gazl.png";
 import Navheader from "./components/Navheader";
+import { baseUrl } from "./axios/axiosClient";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +37,7 @@ const Signin = () => {
 
     try {
       const response = await axios.post(
-        "http://gazl.runasp.net/api/Account/Login",
+        `${baseUrl}/api/Account/Login`,
         userData
       );
       console.log("Login successful:", response.data);

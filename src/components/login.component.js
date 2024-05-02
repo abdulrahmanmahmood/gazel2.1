@@ -5,7 +5,8 @@ import { setAuthData } from "../rtk/slices/auth"; // Adjust the path as per your
 import { useNavigate } from "react-router-dom";
 import nextLogo from "../assets/nextLogo.png";
 import baseLogo from "../assets/baseLogo.png";
-import background from "../assets/background.png"
+import background from "../assets/background.png";
+import { baseUrl } from "../axios/axiosClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://jazlhelp.runasp.net/api/Account/Login",
+        `${baseUrl}/api/Account/Login`,
         userData
       );
       console.log("Login successful:", response.data);

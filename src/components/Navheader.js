@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import userImage from "../assets/Ellipse 2.png";
 import Bell from "../assets/Bell.png";
 import axios from "axios";
+import { baseUrl } from "../axios/axiosClient";
 
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
@@ -37,7 +38,7 @@ export default function Navheader() {
   };
   const fetchAllNotifications = () => {
     axios
-      .get("http://gazl.runasp.net/api/Notification")
+      .get(`${baseUrl}/api/Notification`)
       .then((res) => {
         console.log("fetch notificaions succefully", res.data);
         setNotfications(res.data);

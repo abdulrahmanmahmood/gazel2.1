@@ -17,6 +17,7 @@ import { useSelector } from "react-redux"; // Import useSelector hook to access 
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
 import Footer from "./components/Footer";
+import { baseUrl } from "./axios/axiosClient";
 
 const AllCases = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
@@ -24,7 +25,7 @@ const AllCases = () => {
 
   const fetchPersons = async () => {
     try {
-      const response = await axios.get("http://gazl.runasp.net/api/Content");
+      const response = await axios.get(`${baseUrl}/api/Content`);
       setPersons(response.data);
       console.log("sucess fetching the data", response.data);
     } catch (error) {
@@ -86,7 +87,7 @@ const AllCases = () => {
   const handleDelete = async (id) => {
     if (typeof window !== "undefined") {
       try {
-        await axios.delete(`http://gazl.runasp.net/api/Content/${id}`);
+        await axios.delete(`${baseUrl}/api/Content/${id}`);
         console.log("Person deleted successfully!");
         // Update state or refetch data if necessary
         fetchPersons();

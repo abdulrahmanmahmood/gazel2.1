@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import { useSelector } from "react-redux";
 import CoplainCom from "./components/CoplainCom";
 import axios from "axios";
+import { baseUrl } from "./axios/axiosClient";
 
 const Complaint = () => {
   const [complaints, setComplaints] = useState([]);
@@ -37,7 +38,7 @@ const Complaint = () => {
 
   const getAllComplements = () => {
     axios
-      .get("http://gazl.runasp.net/api/Content/GetAllComplements")
+      .get(`${baseUrl}/api/Content/GetAllComplements`)
       .then((res) => {
         console.log("fetchComplemnts success =>", res.data);
         setComplaints(res.data);
@@ -48,7 +49,7 @@ const Complaint = () => {
   };
   const deleteComplement = (id) => {
     axios
-      .delete(`http://gazl.runasp.net/api/Content/DeleteComplement/${id}`)
+      .delete(`${baseUrl}/api/Content/DeleteComplement/${id}`)
       .then((res) => {
         console.log("delete the complaint successfully", res.data);
         getAllComplements();

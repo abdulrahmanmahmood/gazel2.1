@@ -17,6 +17,7 @@ import { Icon } from "leaflet";
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
 import Footer from "./components/Footer";
+import { baseUrl } from "./axios/axiosClient";
 const AddOpport = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
 
@@ -61,7 +62,7 @@ const AddOpport = () => {
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        "http://gazl.runasp.net/api/Opportunity",
+        `${baseUrl}/api/Opportunity`,
         dataToSend,
         {
           headers: {

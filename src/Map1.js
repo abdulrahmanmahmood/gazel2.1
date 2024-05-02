@@ -17,6 +17,7 @@ import { useSelector } from "react-redux"; // Import useSelector hook to access 
 import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
 import Footer from "./components/Footer";
+import { baseUrl } from "./axios/axiosClient";
 
 const Home = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
@@ -25,9 +26,7 @@ const Home = () => {
 
   const fetchCharities = async () => {
     try {
-      const response = await axios.get(
-        "http://gazl.runasp.net/api/Associations"
-      );
+      const response = await axios.get(`${baseUrl}/api/Associations`);
       setCharities(response.data);
       console.log("sucess fetching the data", response.data);
     } catch (error) {
@@ -37,9 +36,7 @@ const Home = () => {
   };
   const fetchOpports = async () => {
     try {
-      const response = await axios.get(
-        "http://gazl.runasp.net/api/Opportunity"
-      );
+      const response = await axios.get(`${baseUrl}/api/Opportunity`);
       setOpports(response.data);
       console.log("sucess fetching the Oports", response.data);
     } catch (error) {
@@ -50,7 +47,7 @@ const Home = () => {
   const DeleteOpport = (id) => {
     console.log("delete opport ", id);
     axios
-      .delete(`http://gazl.runasp.net/api/Opportunity/${id}`)
+      .delete(`${baseUrl}/api/Opportunity/${id}`)
       .then((res) => {
         alert("تم حذف الفرصة بنجاح");
         fetchOpports();
@@ -129,19 +126,7 @@ const Home = () => {
       });
     }
   };
-  const handleDelete = async (id) => {
-    if (typeof window !== "undefined") {
-      try {
-        await axios.delete(`http://jazlhelp.runasp.net/api/content/${id}`);
-        console.log("Person deleted successfully!");
-        // Update state or refetch data if necessary
-        // fetchPersons();
-      } catch (error) {
-        console.error("Error deleting person:", error);
-        // Handle errors here
-      }
-    }
-  };
+
   const handleUpdate = async (longitude, latitude, id, color) => {
     console.log(`the long >> ${longitude} 
     the id >> ${id}

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Navheader from "./components/Navheader";
 import axios from "axios";
+import { baseUrl } from "./axios/axiosClient";
 
 const SendNotifi = () => {
   const [note, setNote] = useState("");
   const sendNotifi = () => {
     axios
-      .post("http://gazl.runasp.net/api/Notification", {
-        message: note,
-      })
+      .post(`${baseUrl}/api/Notification`,
+        {
+          message: note,
+        }
+      )
       .then((res) => {
         console.log("successful send notification", res.data);
         alert("تم ارسال الاشعار بنجاح");
@@ -27,7 +30,10 @@ const SendNotifi = () => {
         </h1>
         <div className="w-[70%] bg-white py-10 px-5 mx-auto mt-5  rounded-xl ">
           <div>
-            <label htmlFor="not" className="text-center mx-auto block mb-6 text-3xl font-[500]">
+            <label
+              htmlFor="not"
+              className="text-center mx-auto block mb-6 text-3xl font-[500]"
+            >
               رسالة التنبيه
             </label>
             <input

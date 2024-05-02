@@ -18,6 +18,7 @@ import axios from "axios"; // Import Axios for HTTP requests
 import { useDispatch } from "react-redux";
 import MapHeader from "./components/MapHeader";
 import Footer from "./components/Footer";
+import { baseUrl } from "./axios/axiosClient";
 
 const AddCharity = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
@@ -61,7 +62,7 @@ const AddCharity = () => {
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        "http://gazl.runasp.net/api/Associations",
+        `${baseUrl}/api/Associations`,
         dataToSend,
         {
           headers: {

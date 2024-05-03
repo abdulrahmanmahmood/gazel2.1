@@ -8,8 +8,8 @@ const NewsPage = () => {
   return (
     <div className="w-full bg-[#CEB99E]">
       <Navheader />
-      {newsData.map((item) => (
-        <div className="w-full  bg-[white] py-10 my-10">
+      {newsData.map((item, index) => (
+        <div className="w-full  bg-[white] py-10 my-10" key={index}>
           <div className="flex flex-col lg:flex-row  justify-between px-[3%]  mx-auto ">
             <img
               src={item.Image}
@@ -27,7 +27,7 @@ const NewsPage = () => {
           </div>
         </div>
       ))}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

@@ -283,14 +283,19 @@ export default function Navheader() {
         </div>
         {showNotifications && (
           <div className="absolute top-[90px] right-[15%] px-1 py-3 w-[350px] rounded bg-[#a39776]">
-            {notifications?.map((notifi) => (
-              <h4
-                key={notifi.data}
-                className=" mx-auto text-center my-3 p-2 rounded-lg hover:bg-white"
-              >
-                {notifi.message}
-              </h4>
-            ))}
+            {notifications?.map(
+              (
+                notifi,
+                index // Add index as second argument
+              ) => (
+                <h4
+                  key={index} // Use index as key
+                  className=" mx-auto text-center my-3 p-2 rounded-lg hover:bg-white"
+                >
+                  {notifi.message}
+                </h4>
+              )
+            )}
           </div>
         )}
       </div>

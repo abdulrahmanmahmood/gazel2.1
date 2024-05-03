@@ -1,1 +1,1 @@
-export const baseUrl = "http://gazl.runasp.net"
+export const baseUrl = "https://api.socialcasesbisha.com";

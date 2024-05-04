@@ -84,13 +84,13 @@ const Complaint = () => {
           ))}
         </div>
       ) : (
-        <div className="w-[70%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl">
-          <h1 className="text-center my-5 text-3xl font-[600]  ">
+        <div className="lg:w-[70%] w-[90%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl">
+          <h1 className="text-center my-5 text-xl lg:text-3xl font-[600]  ">
             إرسال الشكوى
           </h1>
           <form
             onSubmit={handleSubmit}
-            className="w-[70%] mx-auto px-5 text-right py-5"
+            className="w-[95%] lg:w-[70%] mx-auto px-5 text-right py-5"
           >
             <div className="mb-4">
               <label
@@ -105,7 +105,7 @@ const Complaint = () => {
                 name="senderName"
                 value={formData.senderName}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
+                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[100%] lg:w-[80%] mx-auto mb-5 text-right"
                 placeholder="الأسم "
               />
             </div>
@@ -122,7 +122,7 @@ const Complaint = () => {
                 name="nationalId"
                 value={formData.nationalId}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
+                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[100%] lg:w-[80%] mx-auto mb-5 text-right"
                 placeholder="رقم الهوية"
               />
             </div>
@@ -139,7 +139,7 @@ const Complaint = () => {
                 name="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
+                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[100%] lg:w-[80%] mx-auto mb-5 text-right"
                 placeholder="  رقم الهاتف"
               />
             </div>
@@ -155,7 +155,7 @@ const Complaint = () => {
                 name="complaintDetails"
                 value={formData.complaintDetails}
                 onChange={handleInputChange}
-                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none h-[160px] focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
+                className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none h-[160px] focus:border-[#CEB99E] w-[100%] lg:w-[80%] mx-auto mb-5 text-right"
                 placeholder="تفاصيل الشكوى"
               ></textarea>
             </div>

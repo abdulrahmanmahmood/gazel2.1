@@ -38,6 +38,16 @@ export const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d{2,})(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        "يجب الا تقل كلمة المرور عن 6 احرف انجليزيه و حرف كبير ورقمان ورمز خاص"
+      );
+      return; // Exit the function if password is invalid
+    }
+
     // Construct the userData object
     const userData = {
       displayName: username,
@@ -391,8 +401,9 @@ export const Signup = () => {
                 {" "}
                 إنشاء حساب جديد
               </button>
-              <p className="forgot-password text-center">
-                {error}
+              <p className="forgot-password text-center">{error}</p>
+              <p>
+                {" "}
                 مسجل بالفعل؟ <Link to="/signin">تسجيل الدخول؟</Link>
               </p>
             </div>

@@ -338,12 +338,6 @@ export const Signup = () => {
                   >
                     جمعية شكر لحفظ النعمة
                   </option>
-                  <option
-                    value="4"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    متطوع عام
-                  </option>
                 </select>
               </div>
             )}

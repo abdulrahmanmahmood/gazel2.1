@@ -28,9 +28,9 @@ const Home = () => {
     try {
       const response = await axios.get(`${baseUrl}/api/Associations`);
       setCharities(response.data);
-      console.log("sucess fetching the data", response.data);
+      // console.log("sucess fetching the data", response.data);
     } catch (error) {
-      console.error("Error fetching persons data:", error);
+      console.error("Error fetching charities data:", error);
       // Handle errors here
     }
   };
@@ -38,7 +38,7 @@ const Home = () => {
     try {
       const response = await axios.get(`${baseUrl}/api/Opportunity`);
       setOpports(response.data);
-      console.log("sucess fetching the Oports", response.data);
+      // console.log("sucess fetching the Oports", response.data);
     } catch (error) {
       console.error("Error fetching Opports data:", error);
       // Handle errors here

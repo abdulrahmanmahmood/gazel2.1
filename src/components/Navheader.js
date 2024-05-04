@@ -40,7 +40,7 @@ export default function Navheader() {
     axios
       .get(`${baseUrl}/api/Notification`)
       .then((res) => {
-        console.log("fetch notificaions succefully", res.data);
+        // console.log("fetch notificaions succefully", res.data);
         setNotfications(res.data);
       })
       .catch((error) => {

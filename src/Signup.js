@@ -14,7 +14,7 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [Role, setRole] = useState(true);
+  const [userRole, setuserRole] = useState(true);
   const [showVolunteerDropdown, setShowVolunteerDropdown] = useState(true);
   const [showGovernmentDropdown, setShowGovernmentDropdown] = useState(false);
   const [volunteerCharity, setVolunteerCharity] = useState(0); // Define state variable for volunteer charity
@@ -46,13 +46,13 @@ export const Signup = () => {
       saudiNationalID: nationalID, // Add the saudiNationalID field with the appropriate value
       password,
       confirmPassword,
-      Role,
+      userRole,
     };
 
-    if (Role == 2) {
+    if (userRole == 2) {
       userData.charities = parseInt(volunteerCharity);
-    } else if (Role == 1) {
-      userData.goverrateAgancy = parseInt(governmentAgency);
+    } else if (userRole == 1) {
+      userData.governmentAgency = parseInt(governmentAgency);
     }
 
     console.log("userData", userData);
@@ -85,23 +85,23 @@ export const Signup = () => {
   };
 
   const handleVolSocietRadioChange = () => {
-    setRole(2);
+    setuserRole(2);
     setShowVolunteerDropdown(true);
     setShowGovernmentDropdown(false);
   };
 
   const handleGovernmentRadioChange = () => {
-    setRole(1);
+    setuserRole(1);
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(true);
   };
   const handleThirdPartRadioChange = () => {
-    setRole(3);
+    setuserRole(3);
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(false);
   };
   const handleUserRadioChange = () => {
-    setRole(0);
+    setuserRole(0);
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(false);
   };

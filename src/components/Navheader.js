@@ -71,27 +71,27 @@ export default function Navheader() {
 
   return (
     <nav className="bg-white border-b-[3px]  border-[#0000004D] py-2 w-full">
-      <div className="flex flex-wrap items-center justify-between  px-[3%]  mx-auto ">
-        <div className="flex flex-row gap-3  lg:-order-1">
+      <div className="flex flex-wrap items-center justify-between  px-[1%]  mx-auto ">
+        <div className="flex flex-row   lg:-order-1">
           <img
             src={logo1}
-            className="w-15 h-15 max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
+            className="w-[100px] h-[100px] max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
             alt="Landwind Logo"
           />
           <img
             src={logo2}
-            className="w-15 h-15 max-md:w-22 max-md:h-20 lg:w-[150px] mr-3 sm:h-23"
+            className="w-[100px] h-[100px] max-md:w-22 max-md:h-20 lg:w-[130px]  sm:h-23"
             alt="Landwind Logo"
           />
         </div>
-        <div className="flex flex-row-reverse">
+        <div className="flex flex-row ">
           <div className="flex items-center lg:order-2">
-            <div className="hidden mt-2 mr-4 sm:inline-block">
+            <div className="hidden mt-2 mr-4 sm:inline-block ">
               <span />
             </div>
 
             <button
-              className={`mx-6 ${
+              className={`lg:mx-3 mx-2 ${
                 window.location.pathname === "/first" ||
                 window.location.pathname === "/signin" ||
                 window.location.pathname === "/signup"
@@ -100,10 +100,10 @@ export default function Navheader() {
               }`}
               onClick={handleNotificationsClick}
             >
-              <img src={Bell} />
+              <img src={Bell} className="w-5 h-7" />
             </button>
             {displayName ? (
-              <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
+              <p className=" text-black  lg:text-[20px] lg:font-[700] lg:mx-1">
                 {displayName}
               </p>
             ) : (
@@ -127,7 +127,7 @@ export default function Navheader() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
-                    className="hidden lg:block lg:h-15 lg:w-12 "
+                    className=" block h-10 w-10 lg:h-15 lg:w-12 "
                     src={profileImage}
                     alt=""
                   />
@@ -155,21 +155,6 @@ export default function Navheader() {
                       </Link>
                     )}
                   </Menu.Item>
-
-                  {/* <Menu.Item>
-                    {({ active }) => (
-                      <a
-                        href="#"
-                        className={`
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm text-[#3f4934] no-underline"
-                        `}
-                      >
-                        Settings
-                      </a>
-                    )}
-                  </Menu.Item> */}
-
                   <Menu.Item>
                     {({ active }) => (
                       <Link
@@ -188,16 +173,11 @@ export default function Navheader() {
             <ButtonT toggleMobileMenu={toggleMobileMenu} />
           </div>
 
-          <div
-            className={`${
-              isMobileMenuOpen ? "" : "hidden"
-            } items-center justify-between w-full lg:flex lg:w-auto lg:order-2 right-0`}
-            id="mobile-menu-2"
-          >
-            <ul className="flex flex-col-reverse mt-4  lg:flex-row lg:space-x-8 lg:mt-0 text-[24px] font-[600]">
+          <div>
+            <ul className="hidden lg:flex mt-4  lg:flex-row  lg:mt-0 text-[20px]  lg:font-[600] ">
               {role === 1 && (
                 <li
-                  className={`p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                  className={`p-1 rounded my-2 lg:my-0 lg:px-2 hover:text-black ${
                     window.location.pathname === "/sendnotifi"
                       ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
                       : "text-black "
@@ -212,7 +192,7 @@ export default function Navheader() {
                 </li>
               )}
               <li
-                className={`p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                className={`p-1 rounded my-2 lg:my-0 lg:px-2 hover:text-black ${
                   window.location.pathname === "/complaint"
                     ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
                     : "text-black "
@@ -226,7 +206,7 @@ export default function Navheader() {
                 </Link>
               </li>
               <li
-                className={`text-black p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                className={`text-black p-1 rounded my-2 lg:my-0 lg:px-2 hover:text-black ${
                   window.location.pathname === "/map1" ||
                   window.location.pathname === "/allcases" ||
                   window.location.pathname === "/addOpport" ||
@@ -244,7 +224,7 @@ export default function Navheader() {
                 </Link>
               </li>{" "}
               <li
-                className={`text-black p-1 rounded my-2 lg:my-0 lg:px-4 hover:text-black ${
+                className={`text-black p-1 rounded my-2 lg:my-0 lg:px-2 hover:text-black ${
                   window.location.pathname === "/News"
                     ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
                     : "text-black "
@@ -258,7 +238,7 @@ export default function Navheader() {
                 </Link>
               </li>
               <li
-                className={`text-black p-1 rounded  my-2 lg:my-0 lg:px-4 hover:text-black ${
+                className={`text-black p-1 rounded  my-2 lg:my-0 lg:px-2 hover:text-black ${
                   window.location.pathname === "/"
                     ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
                     : "text-black "
@@ -266,7 +246,7 @@ export default function Navheader() {
               >
                 <Link
                   to="/"
-                  className="block  text-center py-2 pl-3 pr-4  border-b border-gray-100 lg:hover:bg-transparent lg:border-0  lg:p-0 "
+                  className="block  text-center py-2 pl-2 pr-2  border-b border-gray-100 lg:hover:bg-transparent lg:border-0  lg:p-0 "
                 >
                   الرئيسية
                 </Link>
@@ -281,24 +261,124 @@ export default function Navheader() {
             </ul>
           </div>
         </div>
-        {showNotifications && (
-          <div className="absolute top-[90px] right-[15%] px-1 py-3 w-[350px] rounded bg-[#a39776]">
-            {notifications?.map(
-              (
-                notifi,
-                index // Add index as second argument
-              ) => (
-                <h4
-                  key={index} // Use index as key
-                  className=" mx-auto text-center my-3 p-2 rounded-lg hover:bg-white"
+
+        <div
+          className={`${
+            isMobileMenuOpen ? "" : "hidden"
+          } items-center justify-between w-full lg:hidden lg:w-auto lg:order-2 right-0`}
+          id="mobile-menu-2"
+        >
+          <ul className="flex flex-col-reverse mt-1   text-[24px] font-[600]">
+            {role === 1 && (
+              <li
+                className={`p-1 rounded my-1 lg:my-0 lg:px-4 hover:text-black ${
+                  window.location.pathname === "/sendnotifi"
+                    ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                    : "text-black "
+                }`}
+              >
+                <Link
+                  to="/sendnotifi"
+                  className="block py-1 pl-3 pr-4 text-center  rounded lg:bg-transparent  lg:p-0 "
                 >
-                  {notifi.message}
-                </h4>
-              )
+                  ارسال اشعار
+                </Link>
+              </li>
             )}
-          </div>
-        )}
+            <li
+              className={`p-1 rounded my-1 lg:my-0 lg:px-4 hover:text-black ${
+                window.location.pathname === "/complaint"
+                  ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                  : "text-black "
+              }`}
+            >
+              <Link
+                to="/complaint"
+                className="block py-1 pl-3 pr-4 text-center  rounded lg:bg-transparent  lg:p-0 "
+              >
+                الشكاوى
+              </Link>
+            </li>
+            <li
+              className={`text-black p-1 rounded my-1 lg:my-0 lg:px-4 hover:text-black ${
+                window.location.pathname === "/map1" ||
+                window.location.pathname === "/allcases" ||
+                window.location.pathname === "/addOpport" ||
+                window.location.pathname === "/registercase" ||
+                window.location.pathname === "/addcharity"
+                  ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                  : "text-black "
+              }`}
+            >
+              <Link
+                to="/map1"
+                className="block py-1 pl-3 pr-4 text-center   rounded lg:bg-transparent  lg:p-0 "
+              >
+                الخريطة التفاعلية
+              </Link>
+            </li>{" "}
+            <li
+              className={`text-black p-1 rounded my-1 lg:my-0 lg:px-4 hover:text-black ${
+                window.location.pathname === "/News"
+                  ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                  : "text-black "
+              }`}
+            >
+              <Link
+                to="/News"
+                className="block py-1 pl-3 pr-4 text-center   rounded lg:bg-transparent  lg:p-0 "
+              >
+                الاخبار{" "}
+              </Link>
+            </li>
+            <li
+              className={`text-black p-1 rounded  my-1 lg:my-0 lg:px-4 hover:text-black ${
+                window.location.pathname === "/"
+                  ? "text-[#a39776] underline underline-offset-[9px] decoration-[#a39776] decoration-4 "
+                  : "text-black "
+              }`}
+            >
+              <Link
+                to="/"
+                className="block  text-center py-1 pl-3 pr-4  border-b border-gray-100 lg:hover:bg-transparent lg:border-0  lg:p-0 "
+              >
+                الرئيسية
+              </Link>
+            </li>
+            {!displayName && (
+              <li
+                className={`text-black p-1 rounded  my-1 lg:my-0 lg:px-4 hover:text-black lg:hidden  `}
+              >
+                <p className="text-black text-[24px] font-[700] mx-1">
+                  <Link
+                    to="/first"
+                    className="block  text-center py-1 pl-3 pr-4  border-b border-gray-100 lg:hover:bg-transparent lg:border-0  lg:p-0 "
+                  >
+                    تسجيل الدخول
+                  </Link>
+                </p>
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
+      {showNotifications && (
+        <div className="absolute top-[90px] right-[15%] px-1 py-3 w-[350px] rounded bg-[#a39776]">
+          {notifications?.map(
+            (
+              notifi,
+              index // Add index as second argument
+            ) => (
+              <h4
+                key={index} // Use index as key
+                className=" mx-auto text-center my-3 p-2 rounded-lg hover:bg-white"
+              >
+                {notifi.message}
+              </h4>
+            )
+          )}
+        </div>
+      )}
     </nav>
   );
 }

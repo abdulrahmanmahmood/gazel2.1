@@ -75,12 +75,12 @@ export default function Navheader() {
         <div className="flex flex-row   lg:-order-1">
           <img
             src={logo1}
-            className="  max-sm:w-[60px] max-sm:h-[50px] sm:w-[100px] sm:h-[100px] max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
+            className="  max-sm:w-[60px] max-sm:h-[50px] sm:w-[100px]  max-md:w-20 max-md:h-20  lg:w-[90px] mr-5 sm:h-20"
             alt="Landwind Logo"
           />
           <img
             src={logo2}
-            className="max-sm:w-[90px] max-sm:h-[50px] sm:w-[100px] sm:h-[100px] max-md:w-22 max-md:h-20 lg:w-[130px]  sm:h-23"
+            className="max-sm:w-[90px] max-sm:h-[50px] sm:w-[100px]  max-md:w-22 max-md:h-20 lg:w-[120px]  sm:h-20"
             alt="Landwind Logo"
           />
         </div>
@@ -103,7 +103,7 @@ export default function Navheader() {
               <img src={Bell} className="max-sm:w-3 max-sm:h-4  w-5 h-7" />
             </button>
             {displayName ? (
-              <p className="max-sm:text-[13px] text-black  lg:text-[20px] lg:font-[700] lg:mx-1">
+              <p className="max-sm:text-[13px] text-black  lg:text-[20px]  lg:mx-1">
                 {displayName}
               </p>
             ) : (
@@ -174,7 +174,7 @@ export default function Navheader() {
           </div>
 
           <div>
-            <ul className="hidden lg:flex mt-4  lg:flex-row  lg:mt-0 text-[20px]  lg:font-[600] ">
+            <ul className="hidden lg:flex mt-4  lg:flex-row  lg:mt-0 text-[22px] lg:font-[550] ">
               {role === 1 && (
                 <li
                   className={`p-1 rounded my-2 lg:my-0 lg:px-2 hover:text-black ${

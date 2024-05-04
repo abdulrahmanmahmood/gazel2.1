@@ -136,8 +136,8 @@ const AllCases = () => {
     <div className="w-full bg-[#ceb99c]  p-0 m-0 ">
       <Navheader />
       <MapHeader />
-      <h1 className="text-4xl font-bold text-center my-8 text-black ">
-        الجمعيات الخيرية وفرص التطوع في المحافظة
+      <h1 className="text-2xl font-bold text-center my-8 text-black ">
+        كافة الحالات{" "}
       </h1>
       <div className="w-[90%] h-[70vh] mx-auto  border-2 border-blue-500">
         <MapContainer
@@ -238,17 +238,17 @@ const AllCases = () => {
         </MapContainer>
       </div>
 
-      <div className="flex flex-row gap-4 w-[30%]   mt-3 pb-10 h-[10vh] ml-20 pl-12">
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
-          يحتاج الى مساعدة{" "}
+      <div className="flex flex-row gap-4 lg:w-[50%]  md:mx-auto mt-3 pb-10 h-[10vh] lg:ml-20 pl-12">
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto  text-center outline rounded p-3 outline-[#2C4C36]">
+          لم ينفذ{" "}
           <div className="bg-red-700 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36]">
-          جاري التطوير{" "}
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto  text-center outline rounded p-3 outline-[#2C4C36]">
+          جاري التنفيذ{" "}
           <div className="bg-green-600 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
-        <div className="flex flex-row items-baseline gap-2 text-white my-auto text-xl text-center outline rounded p-3 outline-[#2C4C36] ">
-          تم التطوير{" "}
+        <div className="flex flex-row items-baseline gap-2 text-white my-auto  text-center outline rounded p-3 outline-[#2C4C36] ">
+          تم التنفيذ{" "}
           <div className="bg-orange-300 rounded-full w-[15px] h-[15px] my-auto" />
         </div>
       </div>

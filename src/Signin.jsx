@@ -56,15 +56,15 @@ const Signin = () => {
       console.error("Login failed:", error);
 
       // Handle other error cases
-      setError(
-        error.response?.data?.errors ? (
-          error.response.data.errors.map((errorMessage) => (
-            <h2 className="text-red-600">{errorMessage}</h2>
-          ))
-        ) : (
-          <h2 className="text-red-600">{error.response?.data}</h2>
-        )
-      );
+      // setError(
+        // error.response?.data?.errors ? (
+      //     error.response.data.errors.map((errorMessage) => (
+      //       <h2 className="text-red-600">{errorMessage}</h2>
+      //     ))
+      //   ) : (
+          // <h2 className="text-red-600">{error.response?.data}</h2>
+        // )
+      // );
     }
   };
   return (

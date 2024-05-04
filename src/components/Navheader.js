@@ -75,12 +75,12 @@ export default function Navheader() {
         <div className="flex flex-row   lg:-order-1">
           <img
             src={logo1}
-            className="w-[100px] h-[100px] max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
+            className="  max-sm:w-[60px] max-sm:h-[50px] sm:w-[100px] sm:h-[100px] max-md:w-20 max-md:h-20  lg:w-[100px] mr-5 sm:h-23"
             alt="Landwind Logo"
           />
           <img
             src={logo2}
-            className="w-[100px] h-[100px] max-md:w-22 max-md:h-20 lg:w-[130px]  sm:h-23"
+            className="max-sm:w-[90px] max-sm:h-[50px] sm:w-[100px] sm:h-[100px] max-md:w-22 max-md:h-20 lg:w-[130px]  sm:h-23"
             alt="Landwind Logo"
           />
         </div>
@@ -100,10 +100,10 @@ export default function Navheader() {
               }`}
               onClick={handleNotificationsClick}
             >
-              <img src={Bell} className="w-5 h-7" />
+              <img src={Bell} className="max-sm:w-3 max-sm:h-4  w-5 h-7" />
             </button>
             {displayName ? (
-              <p className=" text-black  lg:text-[20px] lg:font-[700] lg:mx-1">
+              <p className="max-sm:text-[13px] text-black  lg:text-[20px] lg:font-[700] lg:mx-1">
                 {displayName}
               </p>
             ) : (
@@ -127,7 +127,7 @@ export default function Navheader() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
-                    className=" block h-10 w-10 lg:h-15 lg:w-12 "
+                    className=" block max-sm:w-5 max-sm:h-5 h-10 w-10 lg:h-15 lg:w-12 "
                     src={profileImage}
                     alt=""
                   />
@@ -268,7 +268,7 @@ export default function Navheader() {
           } items-center justify-between w-full lg:hidden lg:w-auto lg:order-2 right-0`}
           id="mobile-menu-2"
         >
-          <ul className="flex flex-col-reverse mt-1   text-[24px] font-[600]">
+          <ul className="flex flex-col-reverse mt-1   text-[18px] font-[600]">
             {role === 1 && (
               <li
                 className={`p-1 rounded my-1 lg:my-0 lg:px-4 hover:text-black ${

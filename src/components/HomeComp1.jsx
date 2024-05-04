@@ -61,7 +61,7 @@ const HomeComp1 = () => {
           </div>
 
           <div className=" text-right  justify-between flex flex-col col-span-2 ">
-            <p className=" text-2xl font-[500]  text-right p-3 my-3">
+            <p className=" text-xl   text-right p-3 my-3">
               نفذ فريق جزل التطوعي بالتعاون مع محافظة بيشة وجامعة بيشة فكرة موقع
               إلكتروني يهتم بالحالات الإنسانية والعمل التطوعي بالمحافظة من خلال
               متابعة الاعمال عبر خريطة تفاعلية يسهل الإجراءات ويميز هذا الموقع
@@ -71,20 +71,20 @@ const HomeComp1 = () => {
             <h3 className="font-Cairo text-2xl font-bold leading-11 text-right px-3 ">
               كيف يمكنني تسجيل حالتي الإنسانية ؟
             </h3>
-            <p className="font-Cairo text-2xl font-[500] leading-11 text-right p-3 my-3">
+            <p className="font-Cairo text-xl  leading-11 text-right p-3 my-3">
               يمكنك تسجيل حالتك الإنسانية عبر خانة التسجيل في " الرئيسية " حيث
               ستصل للجهات ذات العلاقة حكومية كانت او أهلية ويمكن التفاعل معها
               عبر القطاع الثالث
             </p>
-            <div className="w-[80%] mx-auto flex flex-row justify-between  p-3">
+            <div className="lg:w-[90%] mx-auto flex flex-row justify-between  p-3">
               <button
-                className="px-8 py-2 bg-[#F5F5F5] font-Cairo text-lg font-bold leading-7 text-right rounded-lg"
+                className="px-8 py-2 bg-[#F5F5F5] font-Cairo  text-right rounded-lg"
                 onClick={handleHumanitarianRegistration}
               >
                 تسجيل حالتي الإنسانية
               </button>
               <button
-                className="px-8 py-2 bg-[#CEB99E] text-white font-Cairo text-lg font-bold leading-7 text-right rounded-lg"
+                className="px-4 py-2 bg-[#CEB99E] text-white font-Cairo   text-right rounded-lg"
                 onClick={handleVolunteerRegistration}
               >
                 تسجيل المتطوعين

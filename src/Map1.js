@@ -161,7 +161,7 @@ const Home = () => {
     <div className="w-full bg-[#ceb99c] min-h-screen  m-0 ">
       <Navheader />
       <MapHeader />
-      <h1 className="text-4xl font-bold text-center my-8 text-black ">
+      <h1 className=" lg:text-3xl font-bold text-center my-8 text-black ">
         الجمعيات الخيرية وفرص التطوع في المحافظة
       </h1>
       <div className="w-[90%] h-[70vh] mx-auto  border-2 border-blue-500">

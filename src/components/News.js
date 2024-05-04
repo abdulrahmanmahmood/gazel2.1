@@ -10,10 +10,10 @@ const HomeComp2 = ({ News, Image, title }) => {
           className="bg-cover lg:max-w-[50%] min-w-[40%]  max-h-[50vh] min-h-[50vh]"
         />
         <div className="flex flex-col w-full lg:w-[45%] justify-between">
-          <h2 className="font-Cairo text-4xl font-bold leading-[67.46px] text-right mb-3">
+          <h2 className="font-Cairo text-2xl font-bold leading-[67.46px] text-right mb-3">
             {title}
           </h2>
-          <p className="font-Cairo text-2xl font-semibold leading-[44.98px] text-right  line-clamp-[8] overflow-hidden">
+          <p className="font-Cairo text-xl font-semibold leading-[44.98px] text-right  line-clamp-[8] overflow-hidden">
             {News}
           </p>
         </div>

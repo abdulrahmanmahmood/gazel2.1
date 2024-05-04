@@ -22,6 +22,20 @@ const HomeComp1 = () => {
   return (
     <div className="w-full bg-white min-h-screen ">
       <div className="flex flex-col">
+        <div className="lg:w-[50%] ml-auto pr-10 flex flex-row justify-between  p-3">
+          <button
+            className="px-8 py-2 bg-[#F5F5F5] font-Cairo  text-right rounded-lg"
+            onClick={handleHumanitarianRegistration}
+          >
+            تسجيل حالتي الإنسانية
+          </button>
+          <button
+            className="px-4 py-2 bg-[#CEB99E] text-white font-Cairo   text-right rounded-lg"
+            onClick={handleVolunteerRegistration}
+          >
+            تسجيل المتطوعين
+          </button>
+        </div>
         <div className="flex flex-row px-[5%] mb-3 justify-between">
           <div className="flex flex-row">
             <img src={cloudImag} alt="" />
@@ -76,20 +90,6 @@ const HomeComp1 = () => {
               ستصل للجهات ذات العلاقة حكومية كانت او أهلية ويمكن التفاعل معها
               عبر القطاع الثالث
             </p>
-            <div className="lg:w-[90%] mx-auto flex flex-row justify-between  p-3">
-              <button
-                className="px-8 py-2 bg-[#F5F5F5] font-Cairo  text-right rounded-lg"
-                onClick={handleHumanitarianRegistration}
-              >
-                تسجيل حالتي الإنسانية
-              </button>
-              <button
-                className="px-4 py-2 bg-[#CEB99E] text-white font-Cairo   text-right rounded-lg"
-                onClick={handleVolunteerRegistration}
-              >
-                تسجيل المتطوعين
-              </button>
-            </div>
           </div>
         </div>
       </div>

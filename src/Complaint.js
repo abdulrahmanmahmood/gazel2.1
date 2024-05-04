@@ -18,10 +18,10 @@ const Complaint = () => {
   );
   // State variables to store form data
   const [formData, setFormData] = useState({
-    username: "",
-    contactNumber: "",
+    senderName: "",
+    nationalId: "",
     phoneNumber: "",
-    complaintMessage: "",
+    complaintDetails: "",
   });
 
   // Function to handle changes in form input fields
@@ -34,6 +34,15 @@ const Complaint = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData); // Print form data to the console
+    axios
+      .post(`${baseUrl}/api/Content/AddComplement`, formData)
+      .then((res) => {
+        console.log("successfully sending complement");
+        alert("تم ارسال الشكوى بنجاح");
+      })
+      .catch((error) => {
+        console.log("error in sending complement ", error);
+      });
   };
 
   const getAllComplements = () => {
@@ -86,15 +95,15 @@ const Complaint = () => {
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-5"
-                htmlFor="username"
+                htmlFor="senderName"
               >
                 الأسم
               </label>
               <input
                 type="text"
-                id="username"
-                name="username"
-                value={formData.username}
+                id="senderName"
+                name="senderName"
+                value={formData.senderName}
                 onChange={handleInputChange}
                 className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
                 placeholder="الأسم "
@@ -103,15 +112,15 @@ const Complaint = () => {
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-5"
-                htmlFor="contactNumber"
+                htmlFor="nationalId"
               >
                 رقم الهوية
               </label>
               <input
                 type="text"
-                id="contactNumber"
-                name="contactNumber"
-                value={formData.contactNumber}
+                id="nationalId"
+                name="nationalId"
+                value={formData.nationalId}
                 onChange={handleInputChange}
                 className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
                 placeholder="رقم الهوية"
@@ -137,14 +146,14 @@ const Complaint = () => {
             <div className="mb-4">
               <label
                 className="block text-sm font-bold mb-5"
-                htmlFor="complaintMessage"
+                htmlFor="complaintDetails"
               >
                 تفاصيل الشكوى{" "}
               </label>
               <textarea
-                id="complaintMessage"
-                name="complaintMessage"
-                value={formData.complaintMessage}
+                id="complaintDetails"
+                name="complaintDetails"
+                value={formData.complaintDetails}
                 onChange={handleInputChange}
                 className="border border-gray-300 rounded-md py-2 px-3 focus:outline-none h-[160px] focus:border-[#CEB99E] w-[80%] mx-auto mb-5 text-right"
                 placeholder="تفاصيل الشكوى"

@@ -12,7 +12,7 @@ const Footer = () => {
       <div className="max-md:h-[10vh] h-[20vh] flex flex-row-reverse  items-baseline justify-start pr-10 ">
         <img
           src={logo2}
-          className="max-md:w-[60px] max-md:h-[60px] w-[160px] h-[200px] mx-[20px]  my-auto"
+          className="max-md:w-[60px] max-md:h-[60px] w-[160px] h-[200px] mx-[20px]  my-auto "
           alt="Logo2"
         />
         <img

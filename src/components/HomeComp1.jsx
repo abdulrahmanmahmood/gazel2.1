@@ -5,7 +5,7 @@ import Besha2 from "../assets/Besha2.jpeg";
 import Besha3 from "../assets/Besha3.jpeg";
 
 const HomeComp1 = () => {
-  const images = [HomeImg1, Besha2, Besha3];
+  const images = [HomeImg1, Besha2];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleVolunteerRegistration = () => {

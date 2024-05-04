@@ -14,7 +14,7 @@ const NewsPage = () => {
             <img
               src={item.Image}
               alt=""
-              className="bg-cover max-w-[50%]  max-h-[50vh]"
+              className="bg-cover lg:max-w-[50%]  max-h-[50vh]"
             />
             <div className="flex flex-col w-full lg:w-[45%] ">
               <h2 className="font-Cairo text-3xl font-bold leading-[67.46px] text-right">

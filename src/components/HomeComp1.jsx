@@ -41,7 +41,7 @@ const HomeComp1 = () => {
                   key={index}
                   src={image}
                   alt=""
-                  className={`w-[80%] h-[70vh]  mx-auto rounded-lg ${
+                  className={` lg:w-[80%] h-[70vh]  mx-auto rounded-lg ${
                     index === currentIndex ? "" : "hidden"
                   }`}
                 />

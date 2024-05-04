@@ -7,7 +7,7 @@ const HomeComp2 = ({ News, Image, title }) => {
         <img
           src={Image}
           alt=""
-          className="bg-cover max-w-[50%] min-w-[40%]  max-h-[50vh] min-h-[50vh]"
+          className="bg-cover lg:max-w-[50%] min-w-[40%]  max-h-[50vh] min-h-[50vh]"
         />
         <div className="flex flex-col w-full lg:w-[45%] justify-between">
           <h2 className="font-Cairo text-4xl font-bold leading-[67.46px] text-right mb-3">

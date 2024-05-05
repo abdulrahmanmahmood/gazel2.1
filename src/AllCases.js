@@ -213,7 +213,7 @@ const AllCases = () => {
                             person.color === "Red"
                               ? "bg-red-500"
                               : person.color === "Orange"
-                              ? "bg-orange-500"
+                              ? "bg-yellow-500"
                               : person.color === "Green"
                               ? "bg-green-500"
                               : "" // Default case

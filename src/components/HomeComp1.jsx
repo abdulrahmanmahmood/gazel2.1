@@ -20,7 +20,7 @@ const HomeComp1 = () => {
     setCurrentIndex(index);
   };
   return (
-    <div className="w-full bg-white  ">
+    <div className="w-full bg-white min-h-[650px] ">
       <div className="flex flex-col">
         <div className="lg:w-[50%] ml-auto pr-10 flex flex-row justify-between  p-3">
           <button

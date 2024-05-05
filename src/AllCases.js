@@ -98,19 +98,36 @@ const AllCases = () => {
     }
   };
   const handleUpdate = async (longitude, latitude, id, color) => {
-    console.log(`the long >> ${longitude} 
-    the id >> ${id}
-    the lat >> ${latitude}
-    the color>>${color}
-    `);
+    let caseType = 0;
+    switch (color) {
+      case "Red":
+        caseType = 1;
+        break;
+      case "Green":
+        caseType = 2;
+        break;
+      case "Orange":
+        caseType = 0;
+        break;
+      default:
+        // Handle default case if color doesn't match any of the specified cases
+        break;
+    }
 
-    // try {
-    //   await axios.put(`http://jazlhelp.runasp.net/api/content/${id}`);
-    //   console.log("Person deleted successfully!");
-    //   fetchPersons();
-    // } catch (error) {
-    //   console.error("Error deleting person:", error);
-    // }
+    const data = {
+      longitude: `${longitude}`,
+      latitude: `${latitude}`,
+      caseType: caseType,
+    };
+    console.log(data);
+
+    try {
+      await axios.put(`${baseUrl}/api/Content/UpdateGoverrateAgency`, data);
+      console.log("Person updated successfully!");
+      fetchPersons();
+    } catch (error) {
+      console.error("Error updating person:", error);
+    }
   };
 
   const { role, token, email, displayName } = useSelector(
@@ -193,7 +210,13 @@ const AllCases = () => {
                       <tr>
                         <td
                           className={`border-[1.5px] border-black p-1 ${
-                            person.color == "Red" ? "bg-red-500" : ""
+                            person.color === "Red"
+                              ? "bg-red-500"
+                              : person.color === "Orange"
+                              ? "bg-orange-500"
+                              : person.color === "Green"
+                              ? "bg-green-500"
+                              : "" // Default case
                           }`}
                         ></td>
                         <td className="border-[1.5px] border-black p-1">

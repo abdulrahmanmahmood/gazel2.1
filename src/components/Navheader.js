@@ -13,6 +13,7 @@ import Bell from "../assets/Bell.png";
 import axios from "axios";
 import { baseUrl } from "../axios/axiosClient";
 import { CharityiesImages, governementImages } from "./ProfileImages";
+import theThirdAndVisitor from "../assets/الزائر والقطاع الثالث.jpeg";
 
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
@@ -36,7 +37,11 @@ export default function Navheader() {
     profileImage = CharityiesImages[index];
   } else if (role === 1) {
     // If role is 0 (government)
-    profileImage = governementImages[0]; // Use the first image from the government images array
+    const index = Math.min(governementImages.length - 1, foundation); // Ensure index doesn't exceed array length
+
+    profileImage = governementImages[index]; // Use the first image from the government images array
+  } else {
+    profileImage = theThirdAndVisitor;
   }
 
   const handleNotificationsClick = (event) => {

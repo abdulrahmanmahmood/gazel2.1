@@ -42,14 +42,36 @@ const Signin = () => {
       );
       console.log("Login successful:", response.data);
       // Dispatch action to store authentication data
-      dispatch(
-        setAuthData({
-          token: response.data.token,
-          email: response.data.email,
-          displayName: response.data.displayName,
-          role: response.data.role,
-        })
-      );
+      if (response.data.role == 1) {
+        dispatch(
+          setAuthData({
+            token: response.data.token,
+            email: response.data.email,
+            displayName: response.data.displayName,
+            role: response.data.role,
+            foundation: response.data.governmentAgency,
+          })
+        );
+      } else if (response.data.role == 0) {
+        dispatch(
+          setAuthData({
+            token: response.data.token,
+            email: response.data.email,
+            displayName: response.data.displayName,
+            role: response.data.role,
+            foundation: response.charity,
+          })
+        );
+      } else {
+        dispatch(
+          setAuthData({
+            token: response.data.token,
+            email: response.data.email,
+            displayName: response.data.displayName,
+            role: response.data.role,
+          })
+        );
+      }
       // Redirect to home page or any other route
       navigate("/");
     } catch (error) {
@@ -57,13 +79,13 @@ const Signin = () => {
 
       // Handle other error cases
       // setError(
-        // error.response?.data?.errors ? (
+      // error.response?.data?.errors ? (
       //     error.response.data.errors.map((errorMessage) => (
       //       <h2 className="text-red-600">{errorMessage}</h2>
       //     ))
       //   ) : (
-          // <h2 className="text-red-600">{error.response?.data}</h2>
-        // )
+      // <h2 className="text-red-600">{error.response?.data}</h2>
+      // )
       // );
     }
   };

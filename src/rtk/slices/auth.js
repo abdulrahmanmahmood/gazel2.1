@@ -1,28 +1,32 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: () => {
-    const storedAuthData = JSON.parse(localStorage.getItem('authData'));
+    const storedAuthData = JSON.parse(localStorage.getItem("authData"));
 
-    return storedAuthData ? storedAuthData : {
-      token: null,
-      email: null,
-      displayName: null,
-      role: null,
-    };
+    return storedAuthData
+      ? storedAuthData
+      : {
+          token: null,
+          email: null,
+          displayName: null,
+          role: null,
+          foundation: null,
+        };
   },
   reducers: {
     setAuthData: (state, action) => {
-      const { token, email, displayName, role } = action.payload;
+      const { token, email, displayName, role, foundation } = action.payload;
       if (token && email) {
         state.token = token;
         state.email = email;
         state.displayName = displayName;
         state.role = role;
-        localStorage.setItem('authData', JSON.stringify(action.payload));
+        state.foundation = foundation;
+        localStorage.setItem("authData", JSON.stringify(action.payload));
       } else {
-        console.error('Invalid authentication data');
+        console.error("Invalid authentication data");
       }
     },
     clearAuthData: (state) => {
@@ -30,7 +34,9 @@ const authSlice = createSlice({
       state.email = null;
       state.displayName = null;
       state.role = null;
-      localStorage.removeItem('authData');
+      state.foundation = null;
+
+      localStorage.removeItem("authData");
     },
   },
 });

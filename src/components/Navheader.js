@@ -12,6 +12,7 @@ import userImage from "../assets/Ellipse 2.png";
 import Bell from "../assets/Bell.png";
 import axios from "axios";
 import { baseUrl } from "../axios/axiosClient";
+import { CharityiesImages, governementImages } from "./ProfileImages";
 
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
@@ -23,14 +24,20 @@ export default function Navheader() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const { role, token, email, displayName } = useSelector(
+  const { role, token, email, displayName, foundation } = useSelector(
     (state) => state.auth
   ); // Access user role from
-  let profileImage;
+  console.log("foundation in header", foundation);
+  let profileImage = userImage;
 
-  email
-    ? (profileImage = role === 1 ? gover : charit)
-    : (profileImage = userImage);
+  if (email && role === 0) {
+    // If user is logged in and role is 1 (charity)
+    const index = Math.min(CharityiesImages.length - 1, foundation); // Ensure index doesn't exceed array length
+    profileImage = CharityiesImages[index];
+  } else if (role === 1) {
+    // If role is 0 (government)
+    profileImage = governementImages[0]; // Use the first image from the government images array
+  }
 
   const handleNotificationsClick = (event) => {
     event.stopPropagation(); // Prevent the click event from bubbling up to the document body
@@ -363,7 +370,7 @@ export default function Navheader() {
         </div>
       </div>
       {showNotifications && (
-        <div className="absolute top-[90px] right-[15%] px-1 py-3 w-[350px] rounded bg-[#a39776]">
+        <div className="absolute top-[90px] right-[15%] px-1 py-1 w-[250px] rounded bg-[#a39776]">
           {notifications?.map(
             (
               notifi,

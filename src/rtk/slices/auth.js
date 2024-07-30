@@ -18,13 +18,14 @@ const authSlice = createSlice({
   reducers: {
     setAuthData: (state, action) => {
       const { token, email, displayName, role, foundation } = action.payload;
-      if (token && email) {
+      if (token && email && displayName) {
         state.token = token;
         state.email = email;
         state.displayName = displayName;
         state.role = role;
         state.foundation = foundation;
         localStorage.setItem("authData", JSON.stringify(action.payload));
+        console.log("auth dided correctly", displayName);
       } else {
         console.error("Invalid authentication data");
       }

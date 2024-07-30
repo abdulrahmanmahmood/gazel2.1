@@ -6,7 +6,7 @@ const MapHeader = () => {
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   );
-  if (role === 1)
+  if (role === "GOVERNMENT" || role === "ADMIN")
     return (
       <div className="overflow-hidden">
         <div className=" max-md:hidden   mx-auto bg-white  rounded mt-1">

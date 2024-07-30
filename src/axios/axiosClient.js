@@ -1,1 +1,1 @@
-export const baseUrl = "https://api.socialcasesbisha.com";
+export const baseUrl = "http://localhost:8088";

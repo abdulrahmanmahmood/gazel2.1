@@ -26,9 +26,11 @@ const Home = () => {
 
   const fetchCharities = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/Associations`);
-      setCharities(response.data);
-      // console.log("sucess fetching the data", response.data);
+      const response = await axios.get(
+        `${baseUrl}/api/v1/charity/public/all?size=1000&number=1`
+      );
+      setCharities(response.data.data);
+      // console.log("sucess fetching the data", response.data.data);
     } catch (error) {
       console.error("Error fetching charities data:", error);
       // Handle errors here
@@ -36,11 +38,13 @@ const Home = () => {
   };
   const fetchOpports = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/Opportunity`);
-      setOpports(response.data);
-      // console.log("sucess fetching the Oports", response.data);
+      const response = await axios.get(
+        `${baseUrl}/api/v1/opportunity/public/all?size=1000&number=1`
+      );
+      setOpports(response.data.data);
+      console.log("sucess fetching the Oports", response.data.data);
     } catch (error) {
-      console.error("Error fetching Opports data:", error);
+      console.log("Error fetching Opports data:", error);
       // Handle errors here
     }
   };
@@ -146,9 +150,9 @@ const Home = () => {
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   ); // Access user role from Redux state
-  console.log(
-    `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
-  );
+  // console.log(
+  //   `User info in map1 Page: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
+  // );
 
   const limeOptions = { color: "red" };
 
@@ -180,18 +184,21 @@ const Home = () => {
           />
           <Polyline positions={polyline} />
           {Opports &&
-            Opports?.map((marker, index) => (
+            Opports?.map((marker, id) => (
               <Marker
-                key={index}
+                key={id}
                 position={[marker.latitude, marker.longitude]}
-                icon={getMarkerIcon(marker.data)}
+                icon={new Icon({
+                  iconUrl: greenIcon,
+                  iconSize: [38, 38],
+                })}
               >
                 <Popup>
                   <table className="table-auto border-[1.5px] border-black text-right w-[200px] h-[150px]">
                     <tbody className="border-[1.5px] border-black">
                       <tr className="border-[1.5px] border-black">
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.opportunityType || "N/A"}
+                          {marker.type || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           نوع الفرصة{" "}
@@ -199,7 +206,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.implementingEntity || "N/A"}
+                          {marker.description || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           الجهة المنفذة
@@ -207,7 +214,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.availableCount || "N/A"}
+                          {marker.count || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           العدد المتاح
@@ -215,7 +222,7 @@ const Home = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {marker.contactNumber || "N/A"}
+                          {marker.number || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :رقم الاتصال
@@ -236,9 +243,9 @@ const Home = () => {
               </Marker>
             ))}
           {charities &&
-            charities.map((charity, index) => (
+            charities.map((charity, id) => (
               <Marker
-                key={index}
+                key={id}
                 position={[charity.latitude, charity.longitude]}
                 icon={getMarkerIcon("red")}
               >
@@ -256,7 +263,7 @@ const Home = () => {
 
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {charity.contact || "N/A"}
+                          {charity.number || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :رقم الاتصال

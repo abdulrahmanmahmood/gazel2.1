@@ -51,18 +51,18 @@ const AddOpport = () => {
 
     try {
       const dataToSend = {
-        availableCount: formData.availableCount,
-        contactNumber: formData.contactNumber,
-        opportunityType: formData.opportunityType,
+        count: formData.availableCount,
+        number: formData.contactNumber,
+        description: formData.opportunityType,
         longitude: selectedPosition.lng,
         latitude: selectedPosition.lat,
-        implementingEntity: formData.implementingEntity,
+        // implementingEntity: formData.implementingEntity,
       };
       console.log("Sending data:", dataToSend);
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        `${baseUrl}/api/Opportunity`,
+        `${baseUrl}/api/v1/opportunity`,
         dataToSend,
         {
           headers: {
@@ -81,7 +81,10 @@ const AddOpport = () => {
     } catch (error) {
       console.error("Error sending data:", error);
       // Handle errors here
-      alert("خطأ في ", error.message ? error.message : error);
+      alert(
+        "خطأ في ",
+        error.response.data.message ? error.response.data.message : error
+      );
     }
   };
 

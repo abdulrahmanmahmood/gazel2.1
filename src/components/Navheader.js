@@ -6,20 +6,23 @@ import gover from "../assets/Emblem_of_Saudi_Arabia_(2).svg.png";
 import logo from "../assets/logo.jpg";
 import logo1 from "../assets/baseLogo.png";
 import logo2 from "../assets/AseerLogo.png";
-import { useSelector } from "react-redux"; // Import useSelector hook to access Redux state
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"; // Import useSelector hook to access Redux state
+import { Link, useNavigate } from "react-router-dom";
 import userImage from "../assets/Ellipse 2.png";
 import Bell from "../assets/Bell.png";
 import axios from "axios";
 import { baseUrl } from "../axios/axiosClient";
 import { CharityiesImages, governementImages } from "./ProfileImages";
 import theThirdAndVisitor from "../assets/الزائر والقطاع الثالث.jpeg";
+import { clearAuthData } from "../rtk/slices/auth";
 
 export default function Navheader() {
   // State to manage the visibility of the mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotfications] = useState([]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initialize dispatch hook
 
   // Function to toggle the visibility of the mobile menu
   const toggleMobileMenu = () => {
@@ -28,14 +31,14 @@ export default function Navheader() {
   const { role, token, email, displayName, foundation } = useSelector(
     (state) => state.auth
   ); // Access user role from
-  console.log("foundation in header", foundation);
+  // console.log("name in header", displayName);
   let profileImage = userImage;
 
-  if (email && role === 0) {
+  if (email && role === "CHARITY") {
     // If user is logged in and role is 1 (charity)
     const index = Math.min(CharityiesImages.length - 1, foundation); // Ensure index doesn't exceed array length
     profileImage = CharityiesImages[index];
-  } else if (role === 1) {
+  } else if (role === "GOVERNMENT") {
     // If role is 0 (government)
     const index = Math.min(governementImages.length - 1, foundation); // Ensure index doesn't exceed array length
 
@@ -60,7 +63,7 @@ export default function Navheader() {
       });
   };
   useEffect(() => {
-    fetchAllNotifications();
+    // fetchAllNotifications();
   }, []);
 
   useEffect(() => {
@@ -80,6 +83,11 @@ export default function Navheader() {
       document.body.removeEventListener("click", handleClickOutside);
     };
   }, [showNotifications]);
+
+  const handleLogout = () => {
+    navigate("/first");
+    dispatch(clearAuthData());
+  };
 
   return (
     <nav className="bg-white border-b-[3px]  border-[#0000004D] py-2 w-full">
@@ -119,8 +127,11 @@ export default function Navheader() {
                 {displayName}
               </p>
             ) : (
-              <p className="max-lg:hidden text-black text-[24px] font-[700] mx-1">
-                <Link to="/first">تسجيل الدخول</Link>
+              <p
+                className="max-lg:hidden text-black text-[24px] font-[700] mx-1"
+                onClick={handleLogout}
+              >
+                تسجيل الدخول
               </p>
             )}
 

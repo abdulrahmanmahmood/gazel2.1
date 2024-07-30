@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const [currentNewsIndex, setCurrentNewsIndex] = useState(0);
 
+  // Handlers
+
   const handleNextNews = () => {
     setCurrentNewsIndex((prevIndex) =>
       prevIndex === newsData.length - 1 ? 0 : prevIndex + 1
@@ -21,6 +23,9 @@ const Home = () => {
       prevIndex === 0 ? newsData.length - 1 : prevIndex - 1
     );
   };
+
+
+  
 
   return (
     <div className="w-full bg-[#CEB99E]">

@@ -13,6 +13,9 @@ import logo2 from "./assets/agaweed.png";
 import logo3 from "./assets/gazl.png";
 import Navheader from "./components/Navheader";
 import { baseUrl } from "./axios/axiosClient";
+import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -29,64 +32,83 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitting login form...");
+    setError("");
     const userData = {
       email,
       password,
     };
+    console.log("Submitting login form", userData);
 
     try {
       const response = await axios.post(
-        `${baseUrl}/api/Account/Login`,
-        userData
+        `${baseUrl}/api/v1/auth/login?email=${encodeURIComponent(
+          email
+        )}&password=${encodeURIComponent(password)}`
       );
       console.log("Login successful:", response.data);
+      const notify = () => toast(response.data.message);
+      notify();
+
+      console.log("token is ", response.data.data);
+      const decoded = jwtDecode(response.data.data);
+      console.log("decoded token", decoded);
+      console.log("Name in  token", decoded.NAME);
+
       // Dispatch action to store authentication data
-      if (response.data.role == 1) {
+
+      if (decoded.Role == "GOVERNMENT") {
         dispatch(
           setAuthData({
-            token: response.data.token,
-            email: response.data.email,
-            displayName: response.data.displayName,
-            role: response.data.role,
-            foundation: response.data.governmentAgency,
+            token: response.data.data,
+            email: decoded.sub,
+            displayName: decoded.NAME,
+            role: decoded.Role,
+            foundation: decoded.Entity_Id,
           })
         );
-      } else if (response.data.role == 0) {
+        console.log("name in login from signin 1", decoded.NAME);
+      } else if (decoded.Role == "CHARITY") {
         dispatch(
           setAuthData({
-            token: response.data.token,
-            email: response.data.email,
-            displayName: response.data.displayName,
-            role: response.data.role,
-            foundation: response.charity,
+            token: response.data.data,
+            email: decoded.sub,
+            displayName: decoded.NAME,
+            role: decoded.Role,
+            foundation: decoded.Entity_Id,
           })
         );
+        console.log("name in login from signin 2", decoded.NAME);
+
       } else {
         dispatch(
           setAuthData({
-            token: response.data.token,
-            email: response.data.email,
-            displayName: response.data.displayName,
-            role: response.data.role,
+            token: response.data.data,
+            email: decoded.sub,
+            displayName: decoded.NAME,
+            role: decoded.Role,
           })
         );
+        console.log("name in login from signin 3", decoded.NAME);
+
       }
+
       // Redirect to home page or any other route
-      navigate("/");
+      setInterval(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
       console.error("Login failed:", error);
 
       // Handle other error cases
-      // setError(
-      // error.response?.data?.errors ? (
-      //     error.response.data.errors.map((errorMessage) => (
-      //       <h2 className="text-red-600">{errorMessage}</h2>
-      //     ))
-      //   ) : (
-      // <h2 className="text-red-600">{error.response?.data}</h2>
-      // )
-      // );
+      setError(
+        error.response?.data?.errors ? (
+          error.response.data.errors.map((errorMessage) => (
+            <h2 className="text-red-600">{errorMessage}</h2>
+          ))
+        ) : (
+          <h2 className="text-red-600">{error.response?.data.message}</h2>
+        )
+      );
     }
   };
   return (
@@ -102,7 +124,9 @@ const Signin = () => {
         <div className="opacity-60 mb-10">
           <Navheader />
         </div>
-        <div className="flex flex-col max-md:w-[90%] w-[80%] lg:w-[35%] py-10 max-md:mt-[20px] bg-white mx-auto rounded-lg text-center p-3 ">
+        <div className="flex flex-col max-md:w-[90%] w-[80%] lg:w-[35%] py-10 max-md:mt-[20px] bg-white mx-auto rounded-lg text-center p-3 min-h-[75vh] ">
+          <ToastContainer />
+
           <form style={{ direction: "rtl" }} onSubmit={handleSubmit}>
             <h1 className="mt-[10px] max-md:mb-[10px] lg:mt-[10px] text-[24px] font-[600] ">
               تسجيل الدخول
@@ -166,7 +190,7 @@ const Signin = () => {
           </form>
         </div>
       </div>
-      <div className="w-full max-md:h-[20vh] h-[30vh] bg-[#CEB99E]">
+      <div className="w-full max-md:h-[20vh] h-[30vh] bg-[#CEB99E] mt-[10vh]">
         <h1 className="text-white text-4xl pr-7 font-[800] mr-5 pt-5 text-right ">
           شركاء النجاح{" "}
         </h1>

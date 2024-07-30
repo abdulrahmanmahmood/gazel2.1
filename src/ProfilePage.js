@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navheader from "./components/Navheader";
 import { useSelector } from "react-redux";
 
@@ -10,7 +10,7 @@ const ProfilePage = () => {
     "data in profile",
     `name:>>${displayName}`,
     `role:>>${role}`,
-    `email:>>${email}`
+    `email:>>${email}`,`token>>${token}`
   );
 
   return (

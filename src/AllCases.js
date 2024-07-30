@@ -18,16 +18,32 @@ import axios from "axios"; // Import Axios for HTTP requests
 import MapHeader from "./components/MapHeader";
 import Footer from "./components/Footer";
 import { baseUrl } from "./axios/axiosClient";
+import { toast, ToastContainer } from "react-toastify";
 
 const AllCases = () => {
   const position = [20.02297427233029, 42.624228087923576]; // Default position
   const [persons, setPersons] = useState([]); // State variable to hold persons data
+  const notify = (message) => toast(message);
+
+  const { role, token, email, displayName } = useSelector(
+    (state) => state.auth
+  ); // Access user role from Redux state
+  console.log(
+    `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
+  );
 
   const fetchPersons = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/Content`);
-      setPersons(response.data);
-      console.log("sucess fetching the data", response.data);
+      const response = await axios.get(
+        `${baseUrl}/api/v1/management/case/all?page=0&size=1000`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPersons(response.data.data.content);
+      console.log("sucess fetching the data", response.data.data.content);
     } catch (error) {
       console.error("Error fetching persons data:", error);
       // Handle errors here
@@ -36,10 +52,6 @@ const AllCases = () => {
 
   useEffect(() => {
     fetchPersons();
-    return () => {
-      // Cleanup function to remove markers when component unmounts
-      // setPersons([]); // Clear persons state
-    };
   }, []);
 
   const getMarkerIcon = (data) => {
@@ -87,10 +99,15 @@ const AllCases = () => {
   const handleDelete = async (id) => {
     if (typeof window !== "undefined") {
       try {
-        await axios.delete(`${baseUrl}/api/Content/${id}`);
+        await axios.delete(`${baseUrl}/api/v1/management/case/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         console.log("Person deleted successfully!");
         // Update state or refetch data if necessary
         fetchPersons();
+        notify("تم حذف الحالة بنجاح");
       } catch (error) {
         console.error("Error deleting person:", error);
         // Handle errors here
@@ -101,13 +118,13 @@ const AllCases = () => {
     let caseType = 0;
     switch (color) {
       case "Red":
-        caseType = 1;
+        caseType = "DONE";
         break;
       case "Green":
-        caseType = 2;
+        caseType = "DOING";
         break;
       case "Orange":
-        caseType = 0;
+        caseType = "TODO";
         break;
       default:
         // Handle default case if color doesn't match any of the specified cases
@@ -115,27 +132,27 @@ const AllCases = () => {
     }
 
     const data = {
-      longitude: `${longitude}`,
-      latitude: `${latitude}`,
+      id: id,
       caseType: caseType,
     };
     console.log(data);
 
     try {
-      await axios.put(`${baseUrl}/api/Content/UpdateGoverrateAgency`, data);
+      await axios.put(
+        `${baseUrl}/api/v1/management/case/${id}/status?status=${caseType}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log("Person updated successfully!");
       fetchPersons();
     } catch (error) {
       console.error("Error updating person:", error);
     }
   };
-
-  const { role, token, email, displayName } = useSelector(
-    (state) => state.auth
-  ); // Access user role from Redux state
-  console.log(
-    `User info: Role is ${role}, Token is ${token}, Email is ${email}, DisplayName is ${displayName}`
-  );
 
   useEffect(() => {
     console.log("persons", persons);
@@ -156,6 +173,8 @@ const AllCases = () => {
       <h1 className="text-2xl font-bold text-center my-8 text-black ">
         كافة الحالات{" "}
       </h1>
+      <ToastContainer />
+
       <div className="w-[90%] h-[70vh] mx-auto  border-2 border-blue-500">
         <MapContainer
           center={position}
@@ -191,7 +210,7 @@ const AllCases = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {person.executingEntity || "N/A"}
+                          {person.sponsorName || "N/A"}
                         </td>
 
                         <td className="border-[1.5px] border-black p-1">
@@ -200,7 +219,7 @@ const AllCases = () => {
                       </tr>
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {person.requestType || "N/A"}
+                          {person.description || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :نوع الحالة
@@ -210,11 +229,11 @@ const AllCases = () => {
                       <tr>
                         <td
                           className={`border-[1.5px] border-black p-1 ${
-                            person.color === "Red"
+                            person.statusColor === "Red"
                               ? "bg-red-500"
-                              : person.color === "Orange"
+                              : person.statusColor === "Orange"
                               ? "bg-yellow-500"
-                              : person.color === "Green"
+                              : person.statusColor === "Green"
                               ? "bg-green-500"
                               : "" // Default case
                           }`}
@@ -226,7 +245,7 @@ const AllCases = () => {
 
                       <tr>
                         <td className="border-[1.5px] border-black p-1">
-                          {person.contactNumbers || "N/A"}
+                          {person.number || "N/A"}
                         </td>
                         <td className="border-[1.5px] border-black p-1">
                           :رقم الاتصال
@@ -242,7 +261,7 @@ const AllCases = () => {
                           person.longitude,
                           person.latitude,
                           person.id,
-                          person.color
+                          person.statusColor
                         )
                       }
                     >

@@ -72,16 +72,23 @@ const Complaint = () => {
     <div className=" justify-between flex flex-col bg-[#CEB99E]">
       <Navheader />
 
-      {role === 1 ? (
+      {role === "GOVERNMENT" || "ADMIN" ? (
         <div className="w-[70%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl min-h-[80vh]">
           <h3 className="text-center font-[700] text-3xl">جميع الشكاوي</h3>
-          {complaints?.map((comp) => (
-            <CoplainCom
-              complain={comp}
-              key={comp.id}
-              deleteComplement={deleteComplement}
-            />
-          ))}
+          {complaints.length ? (
+            complaints.map((comp) => (
+              <CoplainCom
+                complain={comp}
+                key={comp.id}
+                deleteComplement={deleteComplement}
+              />
+            ))
+          ) : (
+            <h2 className="text-center my-10 font-semibold text-2xl">
+              {" "}
+              ✅ لا يوجد شكاوي بعد
+            </h2>
+          )}
         </div>
       ) : (
         <div className="lg:w-[70%] w-[90%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl">

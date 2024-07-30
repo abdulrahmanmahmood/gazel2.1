@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,13 +14,14 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [userRole, setuserRole] = useState(true);
+  const [role, setrole] = useState("Visitor");
   const [showVolunteerDropdown, setShowVolunteerDropdown] = useState(true);
   const [showGovernmentDropdown, setShowGovernmentDropdown] = useState(false);
   const [volunteerCharity, setVolunteerCharity] = useState(0); // Define state variable for volunteer charity
   const [governmentAgency, setGovernmentAgency] = useState(0); // Define state variable for government agency
   const [nationalID, setNationalID] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [charities, setCharities] = useState([]);
 
   const navigate = useNavigate();
 
@@ -43,33 +44,33 @@ export const Signup = () => {
 
     if (!passwordRegex.test(password)) {
       setError(
-        "يجب الا تقل كلمة المرور عن 6 احرف انجليزيه و حرف كبير ورقمان ورمز خاص"
+        "يجب الا تقل كلمة المرور عن 8 احرف انجليزيه و حرف كبير ورقمان ورمز خاص"
       );
       return; // Exit the function if password is invalid
     }
 
     // Construct the userData object
     const userData = {
-      displayName: username,
+      id: nationalID, // Add the saudiNationalID field with the appropriate value
       email,
-      contactNumbers: contactNumber, // Add the contactNumbers field with the appropriate value
-      saudiNationalID: nationalID, // Add the saudiNationalID field with the appropriate value
       password,
-      confirmPassword,
-      userRole,
+      number: contactNumber, // Add the contactNumbers field with the appropriate value
+      name: username,
+      role,
+      gender: "MALE",
     };
 
-    if (userRole == 2) {
-      userData.charities = parseInt(volunteerCharity);
-    } else if (userRole == 1) {
-      userData.governmentAgency = parseInt(governmentAgency);
+    if (role == "CHARITY") {
+      userData.entityId = parseInt(volunteerCharity);
+    } else if (role == "GOVERNMENT") {
+      userData.entityId = parseInt(governmentAgency);
     }
 
     console.log("userData", userData);
 
     try {
       const response = await axios.post(
-        `${baseUrl}/api/Account/register`,
+        `${baseUrl}/api/v1/auth/register`,
         userData
       );
       console.log("Registration successful:", response.data);
@@ -79,50 +80,68 @@ export const Signup = () => {
       alert("تم التسجيل بنجاح!");
 
       // Navigate to the verify email page
-      navigate("/signin");
+      setInterval(() => {
+        navigate("/signin");
+      }, 2500);
     } catch (error) {
       console.error("Registration failed:", error);
       setError(
-        error.response?.data?.errors ? (
-          error.response.data.errors.map((errorMessage) => (
-            <h2 className="text-red-600">{errorMessage}</h2>
-          ))
+        error.response?.data?.message ? (
+          <h2 className="text-red-600">{error.response?.data?.message}</h2>
         ) : (
-          <h2 className="text-red-600">{error.response?.data}</h2>
+          <h2 className="text-red-600">{error.message}</h2>
         )
       );
     }
   };
 
   const handleVolSocietRadioChange = () => {
-    setuserRole(2);
+    setrole("CHARITY");
     setShowVolunteerDropdown(true);
     setShowGovernmentDropdown(false);
   };
 
   const handleGovernmentRadioChange = () => {
-    setuserRole(1);
+    setrole("GOVERNMENT");
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(true);
   };
   const handleThirdPartRadioChange = () => {
-    setuserRole(3);
+    setrole("BUSINESS");
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(false);
   };
   const handleUserRadioChange = () => {
-    setuserRole(0);
+    setrole("VISITOR");
     setShowVolunteerDropdown(false);
     setShowGovernmentDropdown(false);
   };
 
   const handleVolunteerCharityChange = (e) => {
     setVolunteerCharity(e.target.value);
+    console.log(e.target.value);
   };
 
   const handleGovernmentAgencyChange = (e) => {
     setGovernmentAgency(e.target.value);
+    console.log(e.target.value);
   };
+  const fetchCharities = async () => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/api/v1/charity/public/all?size=1000&number=1`
+      );
+      setCharities(response.data.data);
+      console.log("sucess fetching the charities data", response.data.data);
+    } catch (error) {
+      console.error("Error fetching charities data:", error);
+      // Handle errors here
+    }
+  };
+
+  useEffect(() => {
+    fetchCharities();
+  }, []);
   return (
     <div className="w-full ">
       <div
@@ -304,40 +323,19 @@ export const Signup = () => {
                   className=" mx-auto text-center  border-[1.5px] border-[#000000] px-3 py-2 w-[300px] "
                   onChange={handleVolunteerCharityChange}
                 >
-                  <option className="p-1 border-[1.5] border-[#000000] text-center">
+                  <option
+                    className="p-1 border-[1.5] border-[#000000] text-center"
+                    value={null}
+                  >
                     {" "}
                     اختر الجمعية الخيرية
                   </option>
-                  <option
-                    value="0"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    جميعة البر الخيرية إيتاء{" "}
-                  </option>
-                  <option
-                    value="1"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    جمعية الاسكان التنموية
-                  </option>
-                  <option
-                    value="2"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    جمعية الصحية الانسانية
-                  </option>
-                  <option
-                    value="3"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    جمعية رأفة رعاية الايتام
-                  </option>
-                  <option
-                    value="4"
-                    className="p-1 border-[1.5] border-[#000000] text-center"
-                  >
-                    جمعية شكر لحفظ النعمة
-                  </option>
+                  {charities &&
+                    charities.map((charity) => (
+                      <option key={charity.id} value={charity.id}>
+                        {charity.name}
+                      </option>
+                    ))}
                 </select>
               </div>
             )}
@@ -350,35 +348,38 @@ export const Signup = () => {
                   className=" mx-auto text-center  border-[1.5px] border-[#000000] px-3 py-2 w-[300px]"
                   onChange={handleGovernmentAgencyChange}
                 >
-                  <option className="p-1 border-[1.5] border-[#000000] text-center">
+                  <option
+                    className="p-1 border-[1.5] border-[#000000] text-center"
+                    value={null}
+                  >
                     اختر الجهة الحكومية
                   </option>
                   <option
-                    value="0"
                     className="p-1 border-[1.5] border-[#000000] text-center"
+                    value="1"
                   >
                     محافظة بيشة{" "}
                   </option>
                   <option
-                    value="1"
+                    value="2"
                     className="p-3 border-[1.5] border-[#000000] text-center"
                   >
                     وزارة الصحة
                   </option>
                   <option
-                    value="2"
+                    value="3"
                     className="p-1 border-[1.5] border-[#000000] text-center"
                   >
                     وزارة المواردة البشرية والتنمية الاجتماعية
                   </option>
                   <option
-                    value="3"
+                    value="4"
                     className="p-1 border-[1.5] border-[#000000] text-center"
                   >
                     وزارة العدل
                   </option>
                   <option
-                    value="4"
+                    value="5"
                     className="p-1 border-[1.5] border-[#000000] text-center"
                   >
                     وزارة الشئون البلدية والقروية والاسكان

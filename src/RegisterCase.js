@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navheader from "./components/Navheader";
 import {
   MapContainer,
@@ -21,10 +21,13 @@ import { baseUrl } from "./axios/axiosClient";
 
 const SetAddress = () => {
   const position = [19.999208860791935, 42.60094642639161]; // Default position
+  const [charities, setCharities] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { role, token, email, displayName } = useSelector(
     (state) => state.auth
   );
+  console.log("role in case", role);
 
   // State variables for form data and selected position
   const [formData, setFormData] = useState({
@@ -57,29 +60,31 @@ const SetAddress = () => {
     try {
       const dataToSend = {
         name: formData.name,
-        contactNumbers: formData.contactNumbers,
-        requestType: formData.requestType,
+        number: formData.contactNumbers,
+        description: formData.requestType,
         longitude: selectedPosition.lng,
         latitude: selectedPosition.lat,
-        executingEntity: formData.executingEntity,
-        saudiNationalID: "1100430121",
+        entityId: formData.executingEntity,
+        id: formData.saudiNationalID,
+        helperType: "CHARITY",
       };
       console.log("Sending data:", dataToSend);
+      setErrorMessage("");
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        `${baseUrl}/api/Content`
-        
-        ,
+        `${baseUrl}/api/v1/management/case`,
+
         dataToSend,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+            "Content-Type": "application/json",
           },
         }
       );
 
-      // console.log("Data sent successfully:", response.data);
+      console.log("Data sent successfully:", response.data);
 
       // Reset form data and selected position after successful submission
       setFormData({ name: "", contactNumbers: "", requestType: "" });
@@ -89,7 +94,11 @@ const SetAddress = () => {
     } catch (error) {
       console.error("Error sending data:", error);
       // Handle errors here
-      alert("خطأ في ", error.message ? error.message : error);
+      alert(
+        "خطأ في ",
+        error.response.data.message ? error.response.data.message : error
+      );
+      setErrorMessage(error.response.data.message);
     }
   };
 
@@ -113,6 +122,22 @@ const SetAddress = () => {
     }
   };
 
+  const fetchCharities = async () => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/api/v1/charity/public/all?size=1000&number=1`
+      );
+      setCharities(response.data.data);
+      console.log("sucess fetching the charities data", response.data.data);
+    } catch (error) {
+      console.error("Error fetching charities data:", error);
+      // Handle errors here
+    }
+  };
+
+  useEffect(() => {
+    fetchCharities();
+  }, []);
   return (
     <div className="w-full bg-[#ceb99c]  min-h-screen m-0 ">
       <Navheader />
@@ -236,21 +261,32 @@ const SetAddress = () => {
                 >
                   الجهة المنفذة
                 </label>
-                <input
-                  type="text"
+                <select
                   id="executingEntity"
                   name="executingEntity"
+                  className="mt-1 p-2 border border-gray-300 rounded-md w-full text-center"
                   value={formData.executingEntity}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      executingEntity: e.target.value,
+                      executingEntity: parseInt(e.target.value),
                     })
                   }
-                  className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-                  required
-                />
+                >
+                  <option value={null}>اختر الجهة المنفذة</option>
+                  {charities &&
+                    charities.map((charity) => (
+                      <option key={charity.id} value={charity.id}>
+                        {charity.name}
+                      </option>
+                    ))}
+                </select>
               </div>
+              {errorMessage && (
+                <h2 className="text-center text-red-600 font-medium my-4">
+                  {errorMessage}
+                </h2>
+              )}
               <button
                 type="submit"
                 className="w-full bg-[#b8b39c] text-white py-2 px-4 rounded-md hover:bg[#b8b39c]                "

@@ -54,7 +54,7 @@ const AddCharity = () => {
     try {
       const dataToSend = {
         name: formData.name,
-        contact: formData.contactNumbers,
+        number: formData.contactNumbers,
         longitude: selectedPosition.lng,
         latitude: selectedPosition.lat,
       };
@@ -62,7 +62,7 @@ const AddCharity = () => {
 
       // Send the form data to the endpoint using Axios
       const response = await axios.post(
-        `${baseUrl}/api/Associations`,
+        `${baseUrl}/api/v1/charity`,
         dataToSend,
         {
           headers: {
@@ -71,7 +71,7 @@ const AddCharity = () => {
         }
       );
 
-      // console.log("Data sent successfully:", response.data);
+      console.log("Data sent successfully:", response.data);
 
       // Reset form data and selected position after successful submission
       setFormData({ name: "", contactNumbers: "", requestType: "" });
@@ -81,7 +81,7 @@ const AddCharity = () => {
     } catch (error) {
       console.error("Error sending data:", error);
       // Handle errors here
-      alert("خطأ في ", error.message ? error.message : error);
+      alert("خطأ في ", error.response.data.message ? error.response.data.message : error);
     }
   };
 

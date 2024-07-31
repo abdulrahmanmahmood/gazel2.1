@@ -102,7 +102,7 @@ const Complaint = () => {
   };
 
   return (
-    <div className=" justify-between flex flex-col bg-[#CEB99E]">
+    <div className=" justify-between flex flex-col bg-[#CEB99E] min-h-screen">
       <Navheader />
 
       {role === "GOVERNMENT" || role === "ADMIN" ? (
@@ -125,12 +125,12 @@ const Complaint = () => {
         </div>
       ) : (
         <div className="lg:w-[70%] w-[90%] bg-white py-5 px-5 mx-auto mt-5 mb-10 rounded-xl">
-          {myComplaints && (
+          {myComplaints > 0 && (
             <h3 className="text-center font-[700] text-3xl my-3">
               شكاوي القديمة
             </h3>
           )}
-          {myComplaints.length &&
+          {myComplaints.length > 0 &&
             myComplaints.map((comp) => (
               <div id={comp.id}>
                 <p className="text-center">{comp.description}</p>

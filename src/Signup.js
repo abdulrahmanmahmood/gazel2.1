@@ -82,7 +82,7 @@ export const Signup = () => {
       // Navigate to the verify email page
       setInterval(() => {
         navigate("/signin");
-      }, 2500);
+      }, 500);
     } catch (error) {
       console.error("Registration failed:", error);
       setError(

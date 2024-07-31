@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { setAuthData } from "./rtk/slices/auth";
 import background from "./assets/background.png";
@@ -51,8 +52,8 @@ const Signin = () => {
 
       console.log("token is ", response.data.data);
       const decoded = jwtDecode(response.data.data);
-      console.log("decoded token", decoded);
-      console.log("Name in  token", decoded.NAME);
+      // console.log("decoded token", decoded);
+      // console.log("Name in  token", decoded.NAME);
 
       // Dispatch action to store authentication data
 
@@ -78,7 +79,6 @@ const Signin = () => {
           })
         );
         console.log("name in login from signin 2", decoded.NAME);
-
       } else {
         dispatch(
           setAuthData({
@@ -89,13 +89,12 @@ const Signin = () => {
           })
         );
         console.log("name in login from signin 3", decoded.NAME);
-
       }
 
       // Redirect to home page or any other route
-      setInterval(() => {
-        navigate("/");
-      }, 2000);
+      // setInterval(() => {
+      navigate("/");
+      // }, 1000);
     } catch (error) {
       console.error("Login failed:", error);
 

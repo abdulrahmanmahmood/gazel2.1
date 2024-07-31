@@ -8,7 +8,7 @@ const CoplainCom = ({ complain, deleteComplement }) => {
     <div className="flex flex-col">
       <div className="flex flex-row-reverse justify-between px-3 py-3">
         <p className="font-Cairo font-[700] text-[20px] text-right">
-          {complain.senderName}
+          {complain.userName}
         </p>
         <p className="font-Cairo font-[700] text-[20px] text-right"></p>
         <div className="flex flex-row-reverse gap-8">
@@ -30,13 +30,13 @@ const CoplainCom = ({ complain, deleteComplement }) => {
         <div className="min-h-[20vh]  border-4  p-5 shadow-lg w-[98%] mx-auto text-right">
           <div className="flex flex-row justify-between mb-3 px-3">
             <p className="font-Cairo font-[400] text-[20px] text-right">
-              رقم الهوية: {complain.nationalId}
+              رقم الهوية: {complain.userId}
             </p>
             <p className="font-Cairo font-[400] text-[20px] text-right">
-              رقم الجوال: {complain.phoneNumber}
+              رقم الجوال: {complain.phone}
             </p>
           </div>
-          {complain.complaintDetails}
+          {complain.description}
         </div>
       )}
     </div>

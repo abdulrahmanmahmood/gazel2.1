@@ -120,10 +120,10 @@ export default function Navheader() {
               }`}
               onClick={handleNotificationsClick}
             >
-              <img src={Bell} className="max-sm:w-3 max-sm:h-4  w-5 h-7" />
+              <img src={Bell} className="max-sm:w-3 max-sm:h-4  w-4 h-5" />
             </button>
             {displayName ? (
-              <p className="max-sm:text-[13px] text-black  lg:text-[20px]  lg:mx-1">
+              <p className="max-sm:text-[13px] text-black  lg:text-[15px]  lg:mx-1">
                 {displayName}
               </p>
             ) : (
@@ -150,7 +150,7 @@ export default function Navheader() {
                   <span className="absolute -inset-1.5" />
                   <span className="sr-only">Open user menu</span>
                   <img
-                    className=" block max-sm:w-5 max-sm:h-5 h-10 w-10 lg:h-15 lg:w-12 "
+                    className=" block max-sm:w-5 max-sm:h-5 h-10 w-10 lg:h-9 lg:w-10 rounded-2xl "
                     src={profileImage}
                     alt=""
                   />
